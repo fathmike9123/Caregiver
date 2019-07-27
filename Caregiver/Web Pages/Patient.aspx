@@ -9,6 +9,71 @@
 <body>
     <form id="form1" runat="server">
         <div>
+            <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Size="XX-Large" Text="Patient Page"></asp:Label>
+            <br />
+            <br />
+            Image of Patient:<br />
+            <asp:Image ID="imgUser" runat="server" Height="164px" Width="236px" />
+            <br />
+            <br />
+            First Name:
+            <asp:TextBox ID="tbFirstName" runat="server"></asp:TextBox>
+            <br />
+            Last Name:
+            <asp:TextBox ID="tbLastName" runat="server"></asp:TextBox>
+            <br />
+            <br />
+            Sex:
+            <asp:TextBox ID="tbSex" runat="server"></asp:TextBox>
+            <br />
+            Date of Birth:
+            <asp:TextBox ID="tbDob" runat="server"></asp:TextBox>
+            &nbsp;<br />
+            <br />
+            Address:<asp:TextBox ID="tbAddress" runat="server"></asp:TextBox>
+            <br />
+            City:<asp:TextBox ID="tbCity" runat="server"></asp:TextBox>
+            <br />
+            Province:<asp:DropDownList ID="ddlProvince" runat="server" AutoPostBack="True">
+                <asp:ListItem>ON</asp:ListItem>
+                <asp:ListItem>AB</asp:ListItem>
+                <asp:ListItem>BC</asp:ListItem>
+                <asp:ListItem>MB</asp:ListItem>
+                <asp:ListItem>NB</asp:ListItem>
+                <asp:ListItem>NL</asp:ListItem>
+                <asp:ListItem>NT</asp:ListItem>
+                <asp:ListItem>NS</asp:ListItem>
+                <asp:ListItem>NU</asp:ListItem>
+                <asp:ListItem>PE</asp:ListItem>
+                <asp:ListItem>QC</asp:ListItem>
+                <asp:ListItem>SK</asp:ListItem>
+                <asp:ListItem>YT</asp:ListItem>
+            </asp:DropDownList>
+            <br />
+            Postal Code:
+            <asp:TextBox ID="tbPostalCode" runat="server"></asp:TextBox>
+            &nbsp;<br />
+            Phone Number:
+            <asp:TextBox ID="tbPhoneNum" runat="server" TextMode="Phone"></asp:TextBox>
+            &nbsp;<br />
+            <br />
+            Symptoms:<asp:CheckBoxList ID="cbSymptom" runat="server" AutoPostBack="True">
+                <asp:ListItem>Symptom1</asp:ListItem>
+                <asp:ListItem>Symptom2</asp:ListItem>
+                <asp:ListItem>Symptom3</asp:ListItem>
+                <asp:ListItem>Symptom4</asp:ListItem>
+                <asp:ListItem>Symptom5</asp:ListItem>
+            </asp:CheckBoxList>
+            <br />
+            Diagnosis:
+            <asp:Label ID="lblDiagnosis" runat="server" Text="Unknown Diagnosis"></asp:Label>
+            <br />
+            <br />
+            <asp:Button ID="tbEdit" runat="server" Text="Edit Information" />
+            <br />
+            <br />
+            <br />
+            <asp:LinkButton ID="lbReturn" runat="server" OnClick="lbReturn_Click">Return to View All Patients</asp:LinkButton>
         </div>
     </form>
 </body>

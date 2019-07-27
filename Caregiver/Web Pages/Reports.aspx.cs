@@ -10,5 +10,9 @@ namespace Caregiver.Web_Pages {
         protected void Page_Load(object sender, EventArgs e) {
 
         }
+
+        protected void lbReturn_Click(object sender, EventArgs e) {
+            Server.Transfer("ViewAllPatients.aspx");
+        }
     }
 }

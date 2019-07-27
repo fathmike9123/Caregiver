@@ -9,6 +9,14 @@
 <body>
     <form id="form1" runat="server">
         <div>
+            <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Size="XX-Large" Text="Database Access (Admins Only)"></asp:Label>
+            <br />
+            <br />
+            <asp:GridView ID="GridView1" runat="server">
+            </asp:GridView>
+            <br />
+            <br />
+            <asp:LinkButton ID="lbReturn" runat="server" OnClick="lbReturn_Click">Return to Home Page</asp:LinkButton>
         </div>
     </form>
 </body>

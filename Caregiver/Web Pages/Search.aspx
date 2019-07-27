@@ -9,6 +9,42 @@
 <body>
     <form id="form1" runat="server">
         <div>
+            <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Size="XX-Large" Text="Search Patient"></asp:Label>
+            <br />
+            <br />
+            First Name:
+            <asp:TextBox ID="tbFirstName" runat="server"></asp:TextBox>
+            <br />
+            <br />
+            Last Name:
+            <asp:TextBox ID="tbLastName" runat="server"></asp:TextBox>
+            <br />
+            <br />
+            City: <asp:TextBox ID="tbCity" runat="server"></asp:TextBox>
+            <br />
+            <br />
+            Phone Number:
+            <asp:TextBox ID="tbPhoneNum" runat="server" TextMode="Phone"></asp:TextBox>
+            &nbsp;<asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="tbPhoneNum" ErrorMessage="Invalid phone number format." ForeColor="Red"></asp:RegularExpressionValidator>
+            <br />
+            <br />
+            Symptoms:<asp:CheckBoxList ID="cbSymptom" runat="server" AutoPostBack="True">
+                <asp:ListItem>Symptom1</asp:ListItem>
+                <asp:ListItem>Symptom2</asp:ListItem>
+                <asp:ListItem>Symptom3</asp:ListItem>
+                <asp:ListItem>Symptom4</asp:ListItem>
+                <asp:ListItem>Symptom5</asp:ListItem>
+            </asp:CheckBoxList>
+            <br />
+            <asp:Button ID="btnSearch" runat="server" Text="Button" />
+            <br />
+            <br />
+            Results:<asp:GridView ID="gridViewResult" runat="server">
+            </asp:GridView>
+            <br />
+            <br />
+            <asp:LinkButton ID="lbReturn" runat="server" OnClick="lbReturn_Click">Return to Home Page</asp:LinkButton>
+            <br />
         </div>
     </form>
 </body>

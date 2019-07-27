@@ -10,5 +10,13 @@ namespace Caregiver.Web_Pages {
         protected void Page_Load(object sender, EventArgs e) {
 
         }
+
+        protected void lbAdd_Click(object sender, EventArgs e) {
+            Server.Transfer("Home.aspx");
+        }
+
+        protected void lbReturn_Click(object sender, EventArgs e) {
+            Server.Transfer("Home.aspx");
+        }
     }
 }

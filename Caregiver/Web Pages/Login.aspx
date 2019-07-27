@@ -12,11 +12,12 @@
             <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Size="XX-Large" Text="Welcome to Caregiver!"></asp:Label>
             <br />
             <br />
+            <br />
             Email:
             <asp:TextBox ID="tbEmail" runat="server"></asp:TextBox>
+&nbsp;<asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="tbEmail" ErrorMessage="Email must be a valid format." ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
             <br />
-            Password:
-            <asp:TextBox ID="tbPassword" runat="server"></asp:TextBox>
+            Password: <asp:TextBox ID="tbPassword" runat="server" TextMode="Password"></asp:TextBox>
             <br />
             <br />
             <asp:LinkButton ID="lbSignIn" runat="server" OnClick="lbSignIn_Click">Sign In</asp:LinkButton>
