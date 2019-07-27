@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Caregiver {
+namespace Caregiver.Web_Pages {
 
 
-    public partial class Login {
+    public partial class Home {
 
         /// <summary>
         /// form1 control.
