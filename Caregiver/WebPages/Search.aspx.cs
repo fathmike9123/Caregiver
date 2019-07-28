@@ -14,12 +14,17 @@ namespace Caregiver.Web_Pages {
                 //    Server.Transfer("Login.aspx");
                 //}
                 tbText.Style.Add("display", "inline");
-                tbPhoneNum.Style.Add("display", "none");
+                rdbSex.Style.Add("display", "none");
                 cbSymptom.Style.Add("display", "none");
+                ddlProvince.Style.Add("display", "none");
+                cblHistory.Style.Add("display", "none");
             } else {
                 tbText.Style.Add("display", "none");
-                tbPhoneNum.Style.Add("display", "none");
+                rdbSex.Style.Add("display", "none");
                 cbSymptom.Style.Add("display", "none");
+                ddlProvince.Style.Add("display", "none");
+                cblHistory.Style.Add("display", "none");
+                
             }
             
         }
@@ -30,21 +35,30 @@ namespace Caregiver.Web_Pages {
 
         protected void btnSearch_Click(object sender, EventArgs e) {
             int selectedIndex = ddlChoice.SelectedIndex;
+
             if (selectedIndex == 4) {
 
-            } else if (selectedIndex == 3){
-                // test here
+            } else if (selectedIndex == 3) {
+                string query = "Phone Number";
+                //SearchCriteria();
+            } else if (selectedIndex == 2) {
+
+            } else if (selectedIndex == 1) {
+
+            } else {
+
             }
+
         }
 
-        private void SearchCriteria(string append) {
+        private void SearchCriteria(string append, string value) {
             string conString = "server=(local);database=Caregiver;Integrated Security=SSPI;";
             using (SqlConnection conn = new SqlConnection(conString)) {
                 try {
                     using (SqlCommand cmd = new SqlCommand()) {
                         conn.Open();
                         cmd.Connection = conn;
-                        string query = "SELECT * FROM Users WHERE" + append
+                        string query = "SELECT * FROM Users WHERE " + append;
                         cmd.CommandText = "SELECT * FROM Users";
                         SqlDataReader reader = cmd.ExecuteReader();
                         gridViewResult.DataSource = reader;
@@ -60,11 +74,15 @@ namespace Caregiver.Web_Pages {
             }
         }
         protected void ddlChoice_SelectedIndexChanged(object sender, EventArgs e) {
-            if (ddlChoice.SelectedIndex == 3 ) {
-                tbPhoneNum.Style.Add("display", "inline");
-            } else if (ddlChoice.SelectedIndex == 4) {
-                cbSymptom.Style.Add("display", "block");
-            } else {
+            if (ddlChoice.SelectedValue == "Sex") {
+                rdbSex.Style.Add("display", "inline");
+            } else if (ddlChoice.SelectedValue == "Province") {
+                ddlProvince.Style.Add("display", "inline");
+            } else if (ddlChoice.SelectedValue == "Symptoms") {
+                cbSymptom.Style.Add("display", "inline");
+            } else if (ddlChoice.SelectedValue == "History")
+                cblHistory.Style.Add("display", "inline");
+            else {
                 tbText.Style.Add("display", "inline");
             }
         }
