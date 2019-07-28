@@ -32,21 +32,22 @@ namespace Caregiver.Web_Pages {
             int selectedIndex = ddlChoice.SelectedIndex;
             if (selectedIndex == 4) {
 
-            } else {
-
+            } else if (selectedIndex == 3){
             }
         }
 
-        private void SearchCriteria() {
+        private void SearchCriteria(string append) {
             string conString = "server=(local);database=Caregiver;Integrated Security=SSPI;";
             using (SqlConnection conn = new SqlConnection(conString)) {
                 try {
                     using (SqlCommand cmd = new SqlCommand()) {
                         conn.Open();
                         cmd.Connection = conn;
+                        string query = "SELECT * FROM Users WHERE" + append
                         cmd.CommandText = "SELECT * FROM Users";
                         SqlDataReader reader = cmd.ExecuteReader();
-                        gridViewResult.Load(reader);
+                        gridViewResult.DataSource = reader;
+                        gridViewResult.DataBind();
 
                         reader.Close();
 
@@ -54,7 +55,6 @@ namespace Caregiver.Web_Pages {
                     }
                 } catch (SqlException ex) {
                     Response.Write("<script>alert('An error has occured with the database');</script>");
-                    System.Diagnostics.Debug.WriteLine(ex.Message);
                 }
             }
         }
