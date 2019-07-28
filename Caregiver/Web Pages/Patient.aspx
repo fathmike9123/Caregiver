@@ -30,6 +30,15 @@
             <asp:TextBox ID="tbDob" runat="server"></asp:TextBox>
             &nbsp;<br />
             <br />
+            History:<asp:CheckBoxList ID="CheckBoxList1" runat="server">
+                <asp:ListItem>Heart Disease</asp:ListItem>
+                <asp:ListItem>Smoking</asp:ListItem>
+                <asp:ListItem>Diabetes</asp:ListItem>
+                <asp:ListItem>High Blood Pressure</asp:ListItem>
+                <asp:ListItem>Stroke</asp:ListItem>
+            </asp:CheckBoxList>
+            <br />
+            <br />
             Address:<asp:TextBox ID="tbAddress" runat="server"></asp:TextBox>
             <br />
             City:<asp:TextBox ID="tbCity" runat="server"></asp:TextBox>
@@ -57,12 +66,14 @@
             <asp:TextBox ID="tbPhoneNum" runat="server" TextMode="Phone"></asp:TextBox>
             &nbsp;<br />
             <br />
-            Symptoms:<asp:CheckBoxList ID="cbSymptom" runat="server" AutoPostBack="True">
-                <asp:ListItem>Symptom1</asp:ListItem>
-                <asp:ListItem>Symptom2</asp:ListItem>
-                <asp:ListItem>Symptom3</asp:ListItem>
-                <asp:ListItem>Symptom4</asp:ListItem>
-                <asp:ListItem>Symptom5</asp:ListItem>
+            Symptoms:<asp:CheckBoxList ID="cbSymptom" runat="server">
+                <asp:ListItem>Chest Pain</asp:ListItem>
+                <asp:ListItem>Shortness of Breath</asp:ListItem>
+                <asp:ListItem>Numbness</asp:ListItem>
+                <asp:ListItem>Dizziness</asp:ListItem>
+                <asp:ListItem>Fever</asp:ListItem>
+                <asp:ListItem>Vomiting</asp:ListItem>
+                <asp:ListItem Value="Constant Urination"></asp:ListItem>
             </asp:CheckBoxList>
             <br />
             Diagnosis:
