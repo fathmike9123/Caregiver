@@ -8,6 +8,9 @@ using System.Data.SqlClient;
  * Available: https://stackoverflow.com/questions/18924147/how-to-get-values-of-selected-items-in-checkboxlist-with-foreach-in-asp-net-c. 
  * [Accessed: 28-Jul-2019].
  *
+ * “Get PK Id of newly inserted row using C#,” The Official Forums for Microsoft ASP.NET. [Online]. 
+ * Available: https://forums.asp.net/t/2132465.aspx?Get PK Id of newly inserted row using C . 
+ * [Accessed: 28-Jul-2019].
  */
 namespace Caregiver.Web_Pages {
     public partial class CreatePatient : System.Web.UI.Page {
@@ -47,19 +50,19 @@ namespace Caregiver.Web_Pages {
             List<string> symptoms = new List<string>();
             foreach (ListItem item in cblSymptom.Items) {
                 if (item.Selected) {
-                    history.Add(item.Value);
+                    symptoms.Add(item.Value);
                 }
             }
 
             Classes.Patient patient = new Classes.Patient(fName, lName, sex, dob);
             patient.SetLocation(address, city, province, postalCode, phoneNum);
-            patient.SetHistory(history);
-            patient.SetSymptoms(symptoms);
+            patient.History = history;
+            patient.Symptoms = symptoms;
 
             DatabaseAccess db = new DatabaseAccess();
             AddNewPatient(patient);
 
-            Server.Transfer("Home.aspx");
+            //Server.Transfer("Home.aspx");
         }
 
         private void AddNewPatient(Classes.Patient patient) {
@@ -73,7 +76,8 @@ namespace Caregiver.Web_Pages {
                         cmd.CommandText = "INSERT INTO Patient (FirstName,LastName,Sex,Birthday," +
                                           "Address,City,Province,PostalCode,PhoneNum)" +
                                           "VALUES(@FirstName,@LastName,@Sex,@Birthday," +
-                                          "@Address,@City,@Province,@PostalCode,@PhoneNum)";
+                                          "@Address,@City,@Province,@PostalCode,@PhoneNum);" +
+                                          "SELECT SCOPE_IDENTITY()";
 
 
                         cmd.Parameters.AddWithValue("@FirstName", patient.FirstName);
@@ -87,9 +91,10 @@ namespace Caregiver.Web_Pages {
                         cmd.Parameters.AddWithValue("@PhoneNum", patient.PhoneNum);
 
                         int patientID = Convert.ToInt32(cmd.ExecuteScalar());
-                        
+
+                        System.Diagnostics.Debug.WriteLine(patientID);
                         // Both foreach loops are NOT working
-                        foreach(string item in patient.History) {
+                        foreach (string item in patient.History) {
                             cmd.CommandText = "INSERT INTO PatientHistory VALUES(@PatientID,@HistoryId)";
                             cmd.Parameters.AddWithValue("@PatientId", patientID);
                             cmd.Parameters.AddWithValue("@HistoryId", item);
@@ -97,7 +102,7 @@ namespace Caregiver.Web_Pages {
                             cmd.Parameters.Clear();
                         }
 
-                        foreach(string item in patient.Symptoms) {
+                        foreach (string item in patient.Symptoms) {
                             cmd.CommandText = "INSERT INTO PatientSymptom VALUES(@PatientID,@SymptomId)";
                             cmd.Parameters.AddWithValue("@PatientId", patientID);
                             cmd.Parameters.AddWithValue("@SymptomId", item);
@@ -108,7 +113,7 @@ namespace Caregiver.Web_Pages {
                     }
                 } catch (SqlException ex) {
                     Response.Write("<script>alert('An error has occured with the database');</script>");
-                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    
                 }
             }
         }
