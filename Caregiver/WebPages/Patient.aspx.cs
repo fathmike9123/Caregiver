@@ -8,7 +8,11 @@ using System.Web.UI.WebControls;
 namespace Caregiver.Web_Pages {
     public partial class Patient : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
-
+            if (!IsPostBack) {
+                if (!(bool)Session["IsRegisteredUser"]) {
+                    Server.Transfer("Login.aspx");
+                }
+            }
         }
 
         protected void lbReturn_Click(object sender, EventArgs e) {

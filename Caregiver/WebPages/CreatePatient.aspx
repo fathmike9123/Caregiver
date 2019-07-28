@@ -29,6 +29,15 @@
             &nbsp;<asp:RegularExpressionValidator ID="RegularExpressionValidator3" runat="server" ControlToValidate="tbDob" ErrorMessage="Invalid date format (dd/mm/yyyy)" ForeColor="Red" ValidationExpression="^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$"></asp:RegularExpressionValidator>
             <br />
             <br />
+            History:<asp:CheckBoxList ID="CheckBoxList1" runat="server">
+                <asp:ListItem>Heart Disease</asp:ListItem>
+                <asp:ListItem>Smoking</asp:ListItem>
+                <asp:ListItem>Diabetes</asp:ListItem>
+                <asp:ListItem>High Blood Pressure</asp:ListItem>
+                <asp:ListItem>Stroke</asp:ListItem>
+            </asp:CheckBoxList>
+            <br />
+            <br />
             Address:<asp:TextBox ID="tbAddress" runat="server"></asp:TextBox>
             <br />
             City:<asp:TextBox ID="tbCity" runat="server"></asp:TextBox>
@@ -58,6 +67,16 @@
             <asp:TextBox ID="tbPhoneNum" runat="server" TextMode="Phone"></asp:TextBox>
             &nbsp;<asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="tbPhoneNum" ErrorMessage="Invalid phone number format." ForeColor="Red"></asp:RegularExpressionValidator>
             <br />
+            <br />
+            Symptoms:<asp:CheckBoxList ID="cbSymptom" runat="server">
+                <asp:ListItem>Chest Pain</asp:ListItem>
+                <asp:ListItem>Shortness of Breath</asp:ListItem>
+                <asp:ListItem>Numbness</asp:ListItem>
+                <asp:ListItem>Dizziness</asp:ListItem>
+                <asp:ListItem>Fever</asp:ListItem>
+                <asp:ListItem>Vomiting</asp:ListItem>
+                <asp:ListItem Value="Constant Urination"></asp:ListItem>
+            </asp:CheckBoxList>
             <br />
             <br />
             <asp:LinkButton ID="lbAdd" runat="server" OnClick="lbAdd_Click">Add New Patient</asp:LinkButton>
