@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data.SqlClient;
 
 namespace Caregiver.Web_Pages {
     public partial class Search : System.Web.UI.Page {
@@ -12,15 +13,11 @@ namespace Caregiver.Web_Pages {
                 //if (!(bool)Session["IsRegisteredUser"]) {
                 //    Server.Transfer("Login.aspx");
                 //}
-                tbFirstName.Style.Add("display", "block");
-                tbLastName.Style.Add("display", "none");
-                tbCity.Style.Add("display", "none");
+                tbText.Style.Add("display", "inline");
                 tbPhoneNum.Style.Add("display", "none");
                 cbSymptom.Style.Add("display", "none");
             } else {
-                tbFirstName.Style.Add("display", "none");
-                tbLastName.Style.Add("display", "none");
-                tbCity.Style.Add("display", "none");
+                tbText.Style.Add("display", "none");
                 tbPhoneNum.Style.Add("display", "none");
                 cbSymptom.Style.Add("display", "none");
             }
@@ -32,19 +29,42 @@ namespace Caregiver.Web_Pages {
         }
 
         protected void btnSearch_Click(object sender, EventArgs e) {
+            int selectedIndex = ddlChoice.SelectedIndex;
+            if (selectedIndex == 4) {
+
+            } else {
+
+            }
         }
 
+        private void SearchCriteria() {
+            string conString = "server=(local);database=Caregiver;Integrated Security=SSPI;";
+            using (SqlConnection conn = new SqlConnection(conString)) {
+                try {
+                    using (SqlCommand cmd = new SqlCommand()) {
+                        conn.Open();
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT * FROM Users";
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        gridViewResult.Load(reader);
+
+                        reader.Close();
+
+
+                    }
+                } catch (SqlException ex) {
+                    Response.Write("<script>alert('An error has occured with the database');</script>");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                }
+            }
+        }
         protected void ddlChoice_SelectedIndexChanged(object sender, EventArgs e) {
-            if (ddlChoice.SelectedIndex == 0) {
-                tbFirstName.Style.Add("display", "block");
-            } else if (ddlChoice.SelectedIndex == 1) {
-                tbLastName.Style.Add("display", "block");
-            } else if (ddlChoice.SelectedIndex == 2) {
-                tbCity.Style.Add("display", "block");
-            } else if (ddlChoice.SelectedIndex == 3) {
-                tbPhoneNum.Style.Add("display", "block");
-            } else {
+            if (ddlChoice.SelectedIndex == 3 ) {
+                tbPhoneNum.Style.Add("display", "inline");
+            } else if (ddlChoice.SelectedIndex == 4) {
                 cbSymptom.Style.Add("display", "block");
+            } else {
+                tbText.Style.Add("display", "inline");
             }
         }
     }
