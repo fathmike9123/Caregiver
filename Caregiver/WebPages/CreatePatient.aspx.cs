@@ -16,9 +16,10 @@ namespace Caregiver.Web_Pages {
     public partial class CreatePatient : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                //if (!(bool)Session["IsRegisteredUser"]) {
-                //    Server.Transfer("Login.aspx");
-                //}
+
+                if (!(bool)Session["IsRegisteredUser"]) {
+                    Server.Transfer("Login.aspx");
+                }
             }
         }
 
@@ -62,7 +63,7 @@ namespace Caregiver.Web_Pages {
             DatabaseAccess db = new DatabaseAccess();
             AddNewPatient(patient);
 
-            //Server.Transfer("Home.aspx");
+            Server.Transfer("Home.aspx");
         }
 
         private void AddNewPatient(Classes.Patient patient) {
@@ -93,7 +94,7 @@ namespace Caregiver.Web_Pages {
                         int patientID = Convert.ToInt32(cmd.ExecuteScalar());
 
                         System.Diagnostics.Debug.WriteLine(patientID);
-                        // Both foreach loops are NOT working
+
                         foreach (string item in patient.History) {
                             cmd.CommandText = "INSERT INTO PatientHistory VALUES(@PatientID,@HistoryId)";
                             cmd.Parameters.AddWithValue("@PatientId", patientID);
