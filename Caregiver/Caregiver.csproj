@@ -71,6 +71,7 @@
     <Content Include="Images\Caregiver Logo.png" />
     <Content Include="Images\Female.png" />
     <Content Include="Images\Male.png" />
+    <Content Include="styles\main.css" />
     <Content Include="WebPages\CreatePatient.aspx" />
     <Content Include="WebPages\DatabaseAccess.aspx" />
     <Content Include="WebPages\Home.aspx" />

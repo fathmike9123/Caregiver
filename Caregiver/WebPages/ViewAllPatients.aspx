@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <link href="styles/main.css" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -15,13 +16,9 @@
             (we have to somehow figure out how to dynamically add LinkButtons<br />
             based on the number of patients we have)<br />
             <br />
-            <asp:LinkButton ID="LinkButton1" runat="server">Patient 1</asp:LinkButton>
-            <br />
-            <br />
-            <asp:LinkButton ID="LinkButton2" runat="server">Patient 2</asp:LinkButton>
-            <br />
-            <br />
-            <asp:LinkButton ID="LinkButton3" runat="server">Patient 3</asp:LinkButton>
+            <asp:PlaceHolder ID="PlaceHolder1" runat="server">
+
+            </asp:PlaceHolder>
             <br />
             <br />
             <br />
