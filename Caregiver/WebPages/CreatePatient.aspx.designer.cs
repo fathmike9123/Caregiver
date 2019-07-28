@@ -76,13 +76,13 @@ namespace Caregiver.Web_Pages {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator3;
         
         /// <summary>
-        /// CheckBoxList1 control.
+        /// cblHistory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList CheckBoxList1;
+        protected global::System.Web.UI.WebControls.CheckBoxList cblHistory;
         
         /// <summary>
         /// tbAddress control.
@@ -148,13 +148,13 @@ namespace Caregiver.Web_Pages {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator2;
         
         /// <summary>
-        /// cbSymptom control.
+        /// cblSymptom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList cbSymptom;
+        protected global::System.Web.UI.WebControls.CheckBoxList cblSymptom;
         
         /// <summary>
         /// lbAdd control.

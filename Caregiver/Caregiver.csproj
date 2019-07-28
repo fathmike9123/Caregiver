@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\DatabaseConnect.cs" />
+    <Compile Include="Classes\Patient.cs" />
     <Compile Include="WebPages\CreatePatient.aspx.cs">
       <DependentUpon>CreatePatient.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

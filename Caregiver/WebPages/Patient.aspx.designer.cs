@@ -76,13 +76,13 @@ namespace Caregiver.Web_Pages {
         protected global::System.Web.UI.WebControls.TextBox tbDob;
         
         /// <summary>
-        /// CheckBoxList1 control.
+        /// cblHistory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList CheckBoxList1;
+        protected global::System.Web.UI.WebControls.CheckBoxList cblHistory;
         
         /// <summary>
         /// tbAddress control.
@@ -130,13 +130,22 @@ namespace Caregiver.Web_Pages {
         protected global::System.Web.UI.WebControls.TextBox tbPhoneNum;
         
         /// <summary>
-        /// cbSymptom control.
+        /// cblSymptom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList cbSymptom;
+        protected global::System.Web.UI.WebControls.CheckBoxList cblSymptom;
+        
+        /// <summary>
+        /// btnDiagnose control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDiagnose;
         
         /// <summary>
         /// lblDiagnosis control.

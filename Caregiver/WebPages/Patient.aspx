@@ -30,12 +30,12 @@
             <asp:TextBox ID="tbDob" runat="server"></asp:TextBox>
             &nbsp;<br />
             <br />
-            History:<asp:CheckBoxList ID="CheckBoxList1" runat="server">
-                <asp:ListItem>Heart Disease</asp:ListItem>
-                <asp:ListItem>Smoking</asp:ListItem>
-                <asp:ListItem>Diabetes</asp:ListItem>
-                <asp:ListItem>High Blood Pressure</asp:ListItem>
-                <asp:ListItem>Stroke</asp:ListItem>
+            History:<asp:CheckBoxList ID="cblHistory" runat="server">
+                <asp:ListItem Value="1">Heart Disease</asp:ListItem>
+                <asp:ListItem Value="2">Smoking</asp:ListItem>
+                <asp:ListItem Value="3">Diabetes</asp:ListItem>
+                <asp:ListItem Value="4">High Blood Pressure</asp:ListItem>
+                <asp:ListItem Value="5">Stroke</asp:ListItem>
             </asp:CheckBoxList>
             <br />
             <br />
@@ -66,18 +66,22 @@
             <asp:TextBox ID="tbPhoneNum" runat="server" TextMode="Phone"></asp:TextBox>
             &nbsp;<br />
             <br />
-            Symptoms:<asp:CheckBoxList ID="cbSymptom" runat="server">
-                <asp:ListItem>Chest Pain</asp:ListItem>
-                <asp:ListItem>Shortness of Breath</asp:ListItem>
-                <asp:ListItem>Numbness</asp:ListItem>
-                <asp:ListItem>Dizziness</asp:ListItem>
-                <asp:ListItem>Fever</asp:ListItem>
-                <asp:ListItem>Vomiting</asp:ListItem>
-                <asp:ListItem Value="Constant Urination"></asp:ListItem>
+            Symptoms:<asp:CheckBoxList ID="cblSymptom" runat="server">
+                <asp:ListItem Value="1">Chest Pain</asp:ListItem>
+                <asp:ListItem Value="2">Shortness of Breath</asp:ListItem>
+                <asp:ListItem Value="3">Numbness</asp:ListItem>
+                <asp:ListItem Value="4">Dizziness</asp:ListItem>
+                <asp:ListItem Value="5">Fever</asp:ListItem>
+                <asp:ListItem Value="6">Vomiting</asp:ListItem>
+                <asp:ListItem Value="7">Constant Urination</asp:ListItem>
             </asp:CheckBoxList>
+            <br />
+            <asp:Button ID="btnDiagnose" runat="server" Text="Diagnose Patient" />
+            <br />
             <br />
             Diagnosis:
             <asp:Label ID="lblDiagnosis" runat="server" Text="Unknown Diagnosis"></asp:Label>
+            <br />
             <br />
             <br />
             <asp:Button ID="tbEdit" runat="server" Text="Edit Information" />

@@ -13,5 +13,6 @@ namespace Caregiver.Classes {
             ConnString = "server=(local);database=Caregiver;Integrated Security=SSPI;";
         }
         
+
     }
 }

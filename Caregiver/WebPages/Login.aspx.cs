@@ -22,7 +22,6 @@ namespace Caregiver {
             } else {
                 string conString = "server=(local);database=Caregiver;Integrated Security=SSPI;";
                 using(SqlConnection conn = new SqlConnection(conString)) {
-                    conn.ConnectionString = conString;
                     try {                        
                         using (SqlCommand cmd = new SqlCommand()) {
                             conn.Open();

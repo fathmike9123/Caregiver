@@ -19,22 +19,22 @@
             <asp:TextBox ID="tbLastName" runat="server"></asp:TextBox>
             <br />
             <br />
-            Sex:<asp:RadioButtonList ID="rdbSex" runat="server" AutoPostBack="True">
-                <asp:ListItem>Male</asp:ListItem>
+            Sex: <asp:RadioButtonList ID="rdbSex" runat="server">
+                <asp:ListItem Selected="True">Male</asp:ListItem>
                 <asp:ListItem>Female</asp:ListItem>
             </asp:RadioButtonList>
             <br />
-            Date of Birth:
+            Date of Birth (YYYY-MM-DD):
             <asp:TextBox ID="tbDob" runat="server"></asp:TextBox>
-            &nbsp;<asp:RegularExpressionValidator ID="RegularExpressionValidator3" runat="server" ControlToValidate="tbDob" ErrorMessage="Invalid date format (dd/mm/yyyy)" ForeColor="Red" ValidationExpression="^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$"></asp:RegularExpressionValidator>
+            &nbsp;<asp:RegularExpressionValidator ID="RegularExpressionValidator3" runat="server" ControlToValidate="tbDob" ErrorMessage="Invalid date format (YYYY-MM-DD)" ForeColor="Red" ValidationExpression="([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))"></asp:RegularExpressionValidator>
             <br />
             <br />
-            History:<asp:CheckBoxList ID="CheckBoxList1" runat="server">
-                <asp:ListItem>Heart Disease</asp:ListItem>
-                <asp:ListItem>Smoking</asp:ListItem>
-                <asp:ListItem>Diabetes</asp:ListItem>
-                <asp:ListItem>High Blood Pressure</asp:ListItem>
-                <asp:ListItem>Stroke</asp:ListItem>
+            History:<asp:CheckBoxList ID="cblHistory" runat="server">
+                <asp:ListItem Value="1">Heart Disease</asp:ListItem>
+                <asp:ListItem Value="2">Smoking</asp:ListItem>
+                <asp:ListItem Value="3">Diabetes</asp:ListItem>
+                <asp:ListItem Value="4">High Blood Pressure</asp:ListItem>
+                <asp:ListItem Value="5">Stroke</asp:ListItem>
             </asp:CheckBoxList>
             <br />
             <br />
@@ -60,22 +60,22 @@
             <br />
             Postal Code:
             <asp:TextBox ID="tbPostalCode" runat="server"></asp:TextBox>
-            &nbsp;<asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="tbPostalCode" ErrorMessage="Invalid postal code format." ForeColor="Red" ValidationExpression="/^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/"></asp:RegularExpressionValidator>
+            &nbsp;<asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="tbPostalCode" ErrorMessage="Invalid postal code format." ForeColor="Red" ValidationExpression="([ABCEGHJKLMNPRSTVXYabcdefghijklmnopqrstuvwxyz][0-9][ABCEGHJKLMNPRSTVWXYZabcdefghijklmnopqrstuvwxyz])\ ?([0-9][ABCEGHJKLMNPRSTVWXYZabcdefghijklmnopqrstuvwxyz][0-9])"></asp:RegularExpressionValidator>
             <br />
             <br />
             Phone Number:
             <asp:TextBox ID="tbPhoneNum" runat="server" TextMode="Phone"></asp:TextBox>
-            &nbsp;<asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="tbPhoneNum" ErrorMessage="Invalid phone number format." ForeColor="Red"></asp:RegularExpressionValidator>
+            &nbsp;<asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="tbPhoneNum" ErrorMessage="Invalid phone number format." ForeColor="Red" ValidationExpression="^(1\s?)?((\([0-9]{3}\))|[0-9]{3})[\s\-]?[\0-9]{3}[\s\-]?[0-9]{4}$"></asp:RegularExpressionValidator>
             <br />
             <br />
-            Symptoms:<asp:CheckBoxList ID="cbSymptom" runat="server">
-                <asp:ListItem>Chest Pain</asp:ListItem>
-                <asp:ListItem>Shortness of Breath</asp:ListItem>
-                <asp:ListItem>Numbness</asp:ListItem>
-                <asp:ListItem>Dizziness</asp:ListItem>
-                <asp:ListItem>Fever</asp:ListItem>
-                <asp:ListItem>Vomiting</asp:ListItem>
-                <asp:ListItem Value="Constant Urination"></asp:ListItem>
+            Symptoms:<asp:CheckBoxList ID="cblSymptom" runat="server">
+                <asp:ListItem Value="1">Chest Pain</asp:ListItem>
+                <asp:ListItem Value="2">Shortness of Breath</asp:ListItem>
+                <asp:ListItem Value="3">Numbness</asp:ListItem>
+                <asp:ListItem Value="4">Dizziness</asp:ListItem>
+                <asp:ListItem Value="5">Fever</asp:ListItem>
+                <asp:ListItem Value="6">Vomiting</asp:ListItem>
+                <asp:ListItem Value="7">Constant Urination</asp:ListItem>
             </asp:CheckBoxList>
             <br />
             <br />
