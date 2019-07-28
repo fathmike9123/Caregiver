@@ -31,31 +31,31 @@ namespace Caregiver.Web_Pages {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// tbFirstName control.
+        /// RegularExpressionValidator2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbFirstName;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator2;
         
         /// <summary>
-        /// tbLastName control.
+        /// ddlChoice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbLastName;
+        protected global::System.Web.UI.WebControls.DropDownList ddlChoice;
         
         /// <summary>
-        /// tbCity control.
+        /// tbText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbCity;
+        protected global::System.Web.UI.WebControls.TextBox tbText;
         
         /// <summary>
         /// tbPhoneNum control.
@@ -65,15 +65,6 @@ namespace Caregiver.Web_Pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbPhoneNum;
-        
-        /// <summary>
-        /// RegularExpressionValidator2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator2;
         
         /// <summary>
         /// cbSymptom control.
