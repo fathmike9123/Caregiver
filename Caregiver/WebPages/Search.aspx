@@ -25,20 +25,14 @@
                 <asp:ListItem>Symptoms</asp:ListItem>
                 <asp:ListItem>History</asp:ListItem>
             </asp:DropDownList>
+
             <asp:TextBox ID="tbText" runat="server"></asp:TextBox>
+
             <asp:RadioButtonList ID="rdbSex" runat="server" RepeatDirection="Horizontal">
-                <asp:ListItem Value="M">Male</asp:ListItem>
+                <asp:ListItem Value="M" Selected="True">Male</asp:ListItem>
                 <asp:ListItem Value="F">Female</asp:ListItem>
             </asp:RadioButtonList>
-            <asp:CheckBoxList ID="cbSymptom" runat="server">
-                <asp:ListItem Value="1">Chest Pain</asp:ListItem>
-                <asp:ListItem Value="2">Shortness of Breath</asp:ListItem>
-                <asp:ListItem Value="3">Numbness</asp:ListItem>
-                <asp:ListItem Value="4">Dizziness</asp:ListItem>
-                <asp:ListItem Value="5">Fever</asp:ListItem>
-                <asp:ListItem Value="6">Vomiting</asp:ListItem>
-                <asp:ListItem Value="7">Constant Urination</asp:ListItem>
-            </asp:CheckBoxList>
+
             <asp:DropDownList ID="ddlProvince" runat="server" AutoPostBack="True">
                 <asp:ListItem>ON</asp:ListItem>
                 <asp:ListItem>AB</asp:ListItem>
@@ -54,19 +48,39 @@
                 <asp:ListItem>SK</asp:ListItem>
                 <asp:ListItem>YT</asp:ListItem>
             </asp:DropDownList>
-            <asp:CheckBoxList ID="cblHistory" runat="server">
-                <asp:ListItem Value="1">Heart Disease</asp:ListItem>
+
+            <asp:RadioButtonList ID="rdbSymptoms" runat="server">
+                <asp:ListItem Value="1" Selected="True">Chest Pain</asp:ListItem>
+                <asp:ListItem Value="2">Shortness of Breath</asp:ListItem>
+                <asp:ListItem Value="3">Numbness</asp:ListItem>
+                <asp:ListItem Value="4">Dizziness</asp:ListItem>
+                <asp:ListItem Value="5">Fever</asp:ListItem>
+                <asp:ListItem Value="6">Vomiting</asp:ListItem>
+                <asp:ListItem Value="7">Constant Urination</asp:ListItem>
+
+            </asp:RadioButtonList>
+
+            <asp:RadioButtonList ID="rdbHistory" runat="server">
+                <asp:ListItem Value="1" Selected="True">Heart Disease</asp:ListItem>
                 <asp:ListItem Value="2">Smoking</asp:ListItem>
                 <asp:ListItem Value="3">Diabetes</asp:ListItem>
                 <asp:ListItem Value="4">High Blood Pressure</asp:ListItem>
                 <asp:ListItem Value="5">Stroke</asp:ListItem>
-            </asp:CheckBoxList>
+            </asp:RadioButtonList>
             <br />
             <br />
             <asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="btnSearch_Click"/>
             <br />
             <br />
-            Results:<asp:GridView ID="gridViewResult" runat="server">
+            Results:<asp:GridView ID="gridViewResult" runat="server" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal">
+                <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
+                <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
+                <PagerStyle BackColor="White" ForeColor="Black" HorizontalAlign="Right" />
+                <SelectedRowStyle BackColor="#CC3333" Font-Bold="True" ForeColor="White" />
+                <SortedAscendingCellStyle BackColor="#F7F7F7" />
+                <SortedAscendingHeaderStyle BackColor="#4B4B4B" />
+                <SortedDescendingCellStyle BackColor="#E5E5E5" />
+                <SortedDescendingHeaderStyle BackColor="#242121" />
             </asp:GridView>
             <br />
             <br />

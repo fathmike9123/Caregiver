@@ -58,15 +58,6 @@ namespace Caregiver.Web_Pages {
         protected global::System.Web.UI.WebControls.RadioButtonList rdbSex;
         
         /// <summary>
-        /// cbSymptom control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList cbSymptom;
-        
-        /// <summary>
         /// ddlProvince control.
         /// </summary>
         /// <remarks>
@@ -76,13 +67,22 @@ namespace Caregiver.Web_Pages {
         protected global::System.Web.UI.WebControls.DropDownList ddlProvince;
         
         /// <summary>
-        /// cblHistory control.
+        /// rdbSymptoms control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList cblHistory;
+        protected global::System.Web.UI.WebControls.RadioButtonList rdbSymptoms;
+        
+        /// <summary>
+        /// rdbHistory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList rdbHistory;
         
         /// <summary>
         /// btnSearch control.

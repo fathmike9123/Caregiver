@@ -92,9 +92,7 @@ namespace Caregiver.Web_Pages {
                         cmd.Parameters.AddWithValue("@PhoneNum", patient.PhoneNum);
 
                         int patientID = Convert.ToInt32(cmd.ExecuteScalar());
-
-                        System.Diagnostics.Debug.WriteLine(patientID);
-
+                        
                         foreach (string item in patient.History) {
                             cmd.CommandText = "INSERT INTO PatientHistory VALUES(@PatientID,@HistoryId)";
                             cmd.Parameters.AddWithValue("@PatientId", patientID);
