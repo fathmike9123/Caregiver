@@ -12,6 +12,7 @@
             <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Size="XX-Large" Text="Database Access (Admins Only)"></asp:Label>
             <br />
             <br />
+            <br />
             <asp:GridView ID="GridView1" runat="server">
             </asp:GridView>
             <br />

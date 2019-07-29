@@ -31,15 +31,6 @@ namespace Caregiver.Web_Pages {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// RegularExpressionValidator2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator2;
-        
-        /// <summary>
         /// ddlChoice control.
         /// </summary>
         /// <remarks>
@@ -58,22 +49,40 @@ namespace Caregiver.Web_Pages {
         protected global::System.Web.UI.WebControls.TextBox tbText;
         
         /// <summary>
-        /// tbPhoneNum control.
+        /// rdbSex control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbPhoneNum;
+        protected global::System.Web.UI.WebControls.RadioButtonList rdbSex;
         
         /// <summary>
-        /// cbSymptom control.
+        /// ddlProvince control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList cbSymptom;
+        protected global::System.Web.UI.WebControls.DropDownList ddlProvince;
+        
+        /// <summary>
+        /// rdbSymptoms control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList rdbSymptoms;
+        
+        /// <summary>
+        /// rdbHistory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList rdbHistory;
         
         /// <summary>
         /// btnSearch control.
