@@ -13,6 +13,9 @@ namespace Caregiver.Web_Pages {
                 //    Server.Transfer("Login.aspx");
                 //}
 
+
+
+
                 //if (!(bool)Session["IsAdmin"]) {
                 //    Server.Transfer("Home.aspx");
                 //}
