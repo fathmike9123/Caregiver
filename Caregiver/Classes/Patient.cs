@@ -17,6 +17,10 @@ namespace Caregiver.Classes {
         public string PhoneNum { get; set; }
         public List<string> Symptoms { get; set; }
 
+        public Patient() {
+
+        }
+
         public Patient(string fName, string lName, char sex, string dob) {
             FirstName = fName;
             LastName = lName;
@@ -46,6 +50,16 @@ namespace Caregiver.Classes {
             } else {
                 Symptoms = symptoms;
             }
+        }
+
+        public int CalculateAge() {
+            DateTime dob = Convert.ToDateTime(Dob);
+            int age = 0;
+            age = DateTime.Now.Year - dob.Year;
+            if (DateTime.Now.DayOfYear < dob.DayOfYear)
+                age = age - 1;
+
+            return age;
         }
     }
 }

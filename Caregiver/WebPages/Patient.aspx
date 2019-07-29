@@ -84,7 +84,7 @@
             <br />
             <br />
             <br />
-            <asp:Button ID="tbEdit" runat="server" Text="Edit Information" />
+            <asp:Button ID="tbEdit" runat="server" Text="Edit Information" OnClick="tbEdit_Click" />
             <br />
             <br />
             <br />
