@@ -9,13 +9,13 @@ namespace Caregiver.Web_Pages {
     public partial class DatabaseAccess : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                if (!(bool)Session["IsRegisteredUser"]) {
-                    Server.Transfer("Login.aspx");
-                }
+                //if (!(bool)Session["IsRegisteredUser"]) {
+                //    Server.Transfer("Login.aspx");
+                //}
 
-                if (!(bool)Session["IsAdmin"]) {
-                    Server.Transfer("Home.aspx");
-                }
+                //if (!(bool)Session["IsAdmin"]) {
+                //    Server.Transfer("Home.aspx");
+                //}
             }
         }
 
