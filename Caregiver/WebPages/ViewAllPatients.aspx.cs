@@ -44,8 +44,9 @@ namespace Caregiver.Web_Pages {
 
                             }
                             btn.Text = reader[1] + " " + reader[2];
-                            btn.ID = "patient_" + reader[0];
-                            btn.PostBackUrl = "Patient.aspx?patientid=" + reader[0];
+
+                            btn.ID = reader[0].ToString();
+                            btn.Click += btnPatient_Click;
 
                             this.form1.Controls.Add(btn);
                             PlaceHolder1.Controls.Add(btn);
@@ -53,9 +54,15 @@ namespace Caregiver.Web_Pages {
                         
                     }
                 } catch (SqlException ex) {
-
+                    Response.Write("<script>alert('An error has occured with the database');</script>");
                 }
             }
+        }
+
+        private void btnPatient_Click(object sender, EventArgs e) {
+            int patientId = Convert.ToInt32(((Button)sender).ID);
+            Session["PatientId"] = patientId;
+            Server.Transfer("Patient.aspx");
         }
 
         protected void lbReturn_Click(object sender, EventArgs e) {

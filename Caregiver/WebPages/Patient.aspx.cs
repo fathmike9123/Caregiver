@@ -12,6 +12,8 @@ namespace Caregiver.Web_Pages {
                 if (!(bool)Session["IsRegisteredUser"]) {
                     Server.Transfer("Login.aspx");
                 }
+
+                Response.Write("<script>alert('"+Session["PatientId"] +"');</script>");
             }
         }
 
