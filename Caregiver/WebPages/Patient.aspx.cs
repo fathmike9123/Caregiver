@@ -202,6 +202,7 @@ namespace Caregiver.Web_Pages {
             int coronaryArteryDiseaseChance = 0;
             int strokeChance = 0;
             int fluChance = 0;
+            int kidneyDiseaseChance = 0;
             //Coronary Artery Disease
             //Person criteria:
             //Female – Age >= 55
