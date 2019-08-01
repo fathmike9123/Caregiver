@@ -76,13 +76,19 @@
                 <asp:ListItem Value="7">Constant Urination</asp:ListItem>
             </asp:CheckBoxList>
             <br />
-            <asp:Button ID="btnDiagnose" runat="server" Text="Diagnose Patient" />
+            <asp:Button ID="btnDiagnose" runat="server" Text="Diagnose Patient" OnClick="btn_Diagnose" />
             <br />
             <br />
             Diagnosis:
             <asp:Label ID="lblDiagnosis" runat="server" Text="Unknown Diagnosis"></asp:Label>
             <br />
+            <asp:Label ID="lbl1" runat="server" Text="lbl1"></asp:Label>
             <br />
+            <asp:Label ID="lbl2" runat="server" Text="Label"></asp:Label>
+            <br />
+            <asp:Label ID="lbl3" runat="server" Text="Label"></asp:Label>
+            <br />
+            <asp:Label ID="lbl4" runat="server" Text="Label"></asp:Label>
             <br />
             <asp:Button ID="tbEdit" runat="server" Text="Edit Information" OnClick="tbEdit_Click" />
             <br />

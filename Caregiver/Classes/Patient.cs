@@ -18,7 +18,8 @@ namespace Caregiver.Classes {
         public List<string> Symptoms { get; set; }
 
         public Patient() {
-
+            History = new List<string>();
+            Symptoms = new List<string>();
         }
 
         public Patient(string fName, string lName, char sex, string dob) {

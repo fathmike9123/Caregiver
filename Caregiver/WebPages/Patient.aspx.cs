@@ -10,9 +10,12 @@ using System.Data;
 namespace Caregiver.Web_Pages {
     public partial class Patient : System.Web.UI.Page {
 
-        private Classes.Patient patient = new Classes.Patient();
+        private Classes.Patient patient;
 
         protected void Page_Load(object sender, EventArgs e) {
+            // initialize patient object
+            patient = new Classes.Patient();
+
             if (!IsPostBack) {
                 if (!(bool)Session["IsRegisteredUser"]) {
                     Server.Transfer("Login.aspx");
@@ -42,7 +45,7 @@ namespace Caregiver.Web_Pages {
                             // reader[9] = phone number
                             patient.FirstName = (string)reader[1];
                             patient.LastName = (string)reader[2];
-                            patient.Sex = (char)reader[3];
+                            patient.Sex = Convert.ToChar(reader[3]);
                             patient.Dob = reader[4].ToString();
                             patient.Address = (string)reader[5];
                             patient.City = (string)reader[6];
@@ -196,13 +199,112 @@ namespace Caregiver.Web_Pages {
             Server.Transfer("ViewAllPatients.aspx");
         }
 
-        protected void btnDiagnose_Click(object sender, EventArgs e) {
+        protected void btn_Diagnose(object sender, EventArgs e) {
             int age = patient.CalculateAge();
             string result = "";
+
             int coronaryArteryDiseaseChance = 0;
             int strokeChance = 0;
             int fluChance = 0;
             int kidneyDiseaseChance = 0;
+
+            // test cases to increase chance of particular disease if they have disease or symptom
+            if (patient.History.Contains("Heart Disease")) {
+                coronaryArteryDiseaseChance += 10;
+            }
+            if (patient.History.Contains("Smoking")) {
+                coronaryArteryDiseaseChance += 10;
+                strokeChance += 10;
+            }
+            if (patient.History.Contains("Diabetes")) {
+                coronaryArteryDiseaseChance += 10;
+            }
+            if (patient.History.Contains("Stroke")) {
+                strokeChance += 10;
+            }
+            if (patient.History.Contains("Diabetes")) {
+                coronaryArteryDiseaseChance += 10;
+            }
+            if (patient.Symptoms.Contains("Chest Pain")) {
+                coronaryArteryDiseaseChance += 10;
+            }
+            if (patient.Symptoms.Contains("Shortness of Breath")) {
+                coronaryArteryDiseaseChance += 10;
+                fluChance += 10;
+                kidneyDiseaseChance += 10;
+            }
+            if (patient.Symptoms.Contains("Dizziness")) {
+                coronaryArteryDiseaseChance += 10;
+                strokeChance += 10;
+                fluChance += 10;
+            }
+            if (patient.Symptoms.Contains("High Blood Pressure")) {
+                coronaryArteryDiseaseChance += 10;
+                strokeChance += 10;
+            }
+            if (patient.Symptoms.Contains("Numbness")) {
+                coronaryArteryDiseaseChance += 10;
+                strokeChance += 10;
+            }
+            if (patient.Symptoms.Contains("Fever")) {
+                fluChance += 10;
+            }
+            if (patient.Symptoms.Contains("Vomiting")) {
+                fluChance += 10;
+                kidneyDiseaseChance += 10;
+            }
+            if (patient.Symptoms.Contains("Constant Urination")) {
+                kidneyDiseaseChance += 10;
+            }
+
+            if(coronaryArteryDiseaseChance == 0 && strokeChance == 0 && fluChance == 0 && kidneyDiseaseChance == 0) {
+                result = "No diagnosis.";
+            }
+
+            // check if all chances are equal
+            if (coronaryArteryDiseaseChance == strokeChance && coronaryArteryDiseaseChance == fluChance && coronaryArteryDiseaseChance == kidneyDiseaseChance) {
+                result = "Probable chance of Flu(Influenza)";
+            } // check if coronaryArteryDiseaseChance is greater than all the others 
+
+            // if one chance is greater than the others
+            if (coronaryArteryDiseaseChance > strokeChance && coronaryArteryDiseaseChance > fluChance && coronaryArteryDiseaseChance > kidneyDiseaseChance) {
+                result = "Probable chance of Coronary Artery Disease";
+            }// check if strokeChance is greater than all the others  
+            else if (strokeChance > coronaryArteryDiseaseChance && strokeChance > fluChance && strokeChance > kidneyDiseaseChance) {
+                result = "Probable chance of Stroke";
+            }// check if fluChance is greater than all the others  
+            else if (fluChance > coronaryArteryDiseaseChance && fluChance > strokeChance && fluChance > kidneyDiseaseChance) {
+                result = "Probable chance of Flu(Influenza)";
+            } // check if kidneyDiseaseChance is greater than all the others 
+            else if (kidneyDiseaseChance > coronaryArteryDiseaseChance && kidneyDiseaseChance > fluChance && kidneyDiseaseChance > strokeChance) {
+                result = "Probable chance of Kidney Disease";
+            } 
+            
+            // check if any 2 are equal and greater than the other 2 -- if
+            if (coronaryArteryDiseaseChance == strokeChance && strokeChance > fluChance && strokeChance > kidneyDiseaseChance) {
+                result = "Probable chance of Stroke";
+            } else if (coronaryArteryDiseaseChance == fluChance && fluChance > strokeChance && fluChance > kidneyDiseaseChance) {
+                result = "Probable chance of Flu(Influenza)";
+            } else if (coronaryArteryDiseaseChance == kidneyDiseaseChance && kidneyDiseaseChance > fluChance && kidneyDiseaseChance > strokeChance) {
+                result = "Probable chance of Kidney Disease";
+            } else if (strokeChance == fluChance && fluChance > coronaryArteryDiseaseChance && fluChance > kidneyDiseaseChance) {
+                result = "Probable chance of Flu(Influenza)";
+            } else if (strokeChance == kidneyDiseaseChance && strokeChance > coronaryArteryDiseaseChance && strokeChance > fluChance) {
+                result = "Probable chance of stroke";
+            } else if (fluChance == kidneyDiseaseChance && fluChance > coronaryArteryDiseaseChance && fluChance > strokeChance) {
+                result = "Probable chance of Flu(Influenza)";
+            } 
+            
+            // check if any 3 are equal && greater than the other one -- if 
+            if (coronaryArteryDiseaseChance == strokeChance && coronaryArteryDiseaseChance == fluChance && fluChance > kidneyDiseaseChance) {
+                result = "Probable chance of Flu(Influenza)";
+            } else if (coronaryArteryDiseaseChance == strokeChance && coronaryArteryDiseaseChance == kidneyDiseaseChance && strokeChance > fluChance) {
+                result = "Probable chance of Stroke";
+            } else if (coronaryArteryDiseaseChance == fluChance && coronaryArteryDiseaseChance == kidneyDiseaseChance && fluChance > strokeChance) {
+                result = "Probable chance of Flu(Influenza)";
+            } else if (strokeChance == fluChance && strokeChance == kidneyDiseaseChance && strokeChance > coronaryArteryDiseaseChance) {
+                result = "Probable chance of Flu(Influenza)";
+            }
             //Coronary Artery Disease
             //Person criteria:
             //Female – Age >= 55
@@ -217,13 +319,14 @@ namespace Caregiver.Web_Pages {
             //Numbness
             //Dizziness
             //High Blood Pressure
-
             if (patient.Sex == 'F' && age >= 55 || patient.Sex == 'M' && age >= 45) {
-               if(patient.History.Contains("Heart Disease") && patient.History.Contains("Smoking") 
-                    && patient.History.Contains("Diabetes") && patient.Symptoms.Contains("Chest Pain")
-                    && patient.Symptoms.Contains("Shortness of Breath") && patient.Symptoms.Contains("Numbness")
-                    && patient.Symptoms.Contains("Dizziness") && patient.Symptoms.Contains("High Blood Pressure")) {
-                    result = "Coronary Artery Disease";
+                coronaryArteryDiseaseChance += 10;
+                if (patient.History.Contains("Heart Disease") && patient.History.Contains("Smoking")
+                     && patient.History.Contains("Diabetes") && patient.Symptoms.Contains("Chest Pain")
+                     && patient.Symptoms.Contains("Shortness of Breath") && patient.Symptoms.Contains("Numbness")
+                     && patient.Symptoms.Contains("Dizziness") && patient.Symptoms.Contains("High Blood Pressure")) {
+                    result = "Probable chance of Coronary Artery Disease";
+                    
                 }
             }
 
@@ -239,10 +342,11 @@ namespace Caregiver.Web_Pages {
             //Dizziness
             //Numbness
             if (patient.Sex == 'F' && age >= 55 || patient.Sex == 'M' && age > 55) {
-                if(patient.History.Contains("Smoking") && patient.History.Contains("Stroke") 
+                strokeChance += 10;
+                if (patient.History.Contains("Smoking") && patient.History.Contains("Stroke")
                     && patient.Symptoms.Contains("High Blood Pressure") && patient.Symptoms.Contains("Dizziness")
                     && patient.Symptoms.Contains("Numbness")) {
-                    result = "Stroke";
+                    result = "Probable chance of Stroke";
                 }
             }
 
@@ -256,9 +360,10 @@ namespace Caregiver.Web_Pages {
             //Fever
             //Vomiting
             if (age <= 2 || age >= 65) {
-                if(patient.Symptoms.Contains("Shortness of Breath") && patient.Symptoms.Contains("Dizziness")
+                fluChance += 10;
+                if (patient.Symptoms.Contains("Shortness of Breath") && patient.Symptoms.Contains("Dizziness")
                     && patient.Symptoms.Contains("Fever") && patient.Symptoms.Contains("Vomiting")) {
-                    result = "Flu(Influenza)";
+                    result = "Probable chance of Flu(Influenza)";
                 }
             }
 
@@ -271,18 +376,84 @@ namespace Caregiver.Web_Pages {
             //Constant urination
             //Shortness of Breath
             if (age >= 60) {
-                if(patient.Symptoms.Contains("Vomiting") && patient.Symptoms.Contains("Constant Urination")
+                kidneyDiseaseChance += 10;
+                if (patient.Symptoms.Contains("Vomiting") && patient.Symptoms.Contains("Constant Urination")
                     && patient.Symptoms.Contains("Shortness of Breath")) {
-                    result = "Kidney Disease";
+                    result = "Probable chance of Kidney Disease";
                 }
             }
 
-            lblDiagnosis.Text = result;
+            lbl1.Text = "coronaryArteryDiseaseChance = " + coronaryArteryDiseaseChance.ToString();
+            lbl2.Text = "strokeChance = " + strokeChance.ToString();
+            lbl3.Text = "fluChance = " + fluChance.ToString();
+            lbl4.Text = "kidneyDiseaseChance = " + kidneyDiseaseChance.ToString();
 
+            lblDiagnosis.Text = result;
+        }
+
+        protected void btnDiagnose_Click(object sender, EventArgs e) {
+            
         }
 
         protected void tbEdit_Click(object sender, EventArgs e) {
+            using (SqlConnection conn = new SqlConnection()) {
+                conn.ConnectionString = "server=(local);database=Caregiver;Integrated Security=SSPI";
+                using (SqlCommand cmd = new SqlCommand()) {
+                    conn.Open();
+                    cmd.Connection = conn;
 
+                    cmd.CommandText = "Delete from PatientHistory where PatientId=@id;"
+                               +"Delete from PatientSymptom where PatientId=@id" ;
+                    cmd.Parameters.AddWithValue("@id", Session["PatientId"]);
+                    cmd.ExecuteNonQuery();
+
+                    cmd.CommandText = "Update Patient set FirstName=@FirstName,LastName=@LastName,Sex=@Sex,Birthday=@Birthday," +
+                                          "Address=@Address,City=@City,Province=@Province,PostalCode=@PostalCode,PhoneNum=@PhoneNum" +
+                                          " where PatientId = @id2;";
+                    cmd.Parameters.AddWithValue("@FirstName", tbFirstName.Text);
+                    cmd.Parameters.AddWithValue("@LastName", tbLastName.Text);
+                    cmd.Parameters.AddWithValue("@Sex", tbSex.Text);
+                    cmd.Parameters.AddWithValue("@Birthday", tbDob.Text);
+                    cmd.Parameters.AddWithValue("@Address", tbAddress.Text);
+                    cmd.Parameters.AddWithValue("@City", tbCity.Text);
+                    cmd.Parameters.AddWithValue("@Province", ddlProvince.SelectedItem.Value);
+                    cmd.Parameters.AddWithValue("@PostalCode", tbPostalCode.Text);
+                    cmd.Parameters.AddWithValue("@PhoneNum", tbPhoneNum.Text);
+                    cmd.Parameters.AddWithValue("@id2", Session["PatientId"]);
+                    cmd.ExecuteNonQuery();
+
+                    List<string> history = new List<string>();
+                    foreach (ListItem item in cblHistory.Items) {
+                        if (item.Selected) {
+                            history.Add(item.Value);
+                        }
+                    }
+
+                    List<string> symptoms = new List<string>();
+                    foreach (ListItem item in cblSymptom.Items) {
+                        if (item.Selected) {
+                            symptoms.Add(item.Value);
+                        }
+                    }
+
+                    foreach (string item in history) {
+                        cmd.CommandText = "INSERT INTO PatientHistory VALUES(@PatientID,@HistoryId)";
+                        cmd.Parameters.AddWithValue("@PatientId", Session["PatientId"]);
+                        cmd.Parameters.AddWithValue("@HistoryId", item);
+                        cmd.ExecuteNonQuery();
+                        cmd.Parameters.Clear();
+                    }
+
+                    foreach (string item in symptoms) {
+                        cmd.CommandText = "INSERT INTO PatientSymptom VALUES(@PatientID,@SymptomId)";
+                        cmd.Parameters.AddWithValue("@PatientId", Session["PatientId"]);
+                        cmd.Parameters.AddWithValue("@SymptomId", item);
+                        cmd.ExecuteNonQuery();
+                        cmd.Parameters.Clear();
+                    }
+                    conn.Close();
+                }
+            }
         }
     }
 }
