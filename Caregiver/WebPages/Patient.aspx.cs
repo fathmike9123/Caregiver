@@ -21,7 +21,7 @@ namespace Caregiver.Web_Pages {
                     Server.Transfer("Login.aspx");
                 }
 
-                //Response.Write("<script>alert('"+Session["PatientId"] +"');</script>");
+                Response.Write("<script>alert('"+Session["PatientId"] +"');</script>");
 
                 using (SqlConnection conn = new SqlConnection()) {
                     conn.ConnectionString = "server=(local);database=Caregiver;integrated security=SSPI;";
@@ -398,61 +398,70 @@ namespace Caregiver.Web_Pages {
         protected void tbEdit_Click(object sender, EventArgs e) {
             using (SqlConnection conn = new SqlConnection()) {
                 conn.ConnectionString = "server=(local);database=Caregiver;Integrated Security=SSPI";
-                using (SqlCommand cmd = new SqlCommand()) {
-                    conn.Open();
-                    cmd.Connection = conn;
+                try {
+                    using (SqlCommand cmd = new SqlCommand()) {
+                        conn.Open();
+                        cmd.Connection = conn;
 
-                    cmd.CommandText = "Delete from PatientHistory where PatientId=@id;"
-                               +"Delete from PatientSymptom where PatientId=@id" ;
-                    cmd.Parameters.AddWithValue("@id", Session["PatientId"]);
-                    cmd.ExecuteNonQuery();
+                        cmd.CommandText = "Delete from PatientHistory where PatientId=@id;"
+                                        + "Delete from PatientSymptom where PatientId=@id";
+                        cmd.Parameters.AddWithValue("@id", Session["PatientId"]);
+                        cmd.ExecuteNonQuery();
 
-                    cmd.CommandText = "Update Patient set FirstName=@FirstName,LastName=@LastName,Sex=@Sex,Birthday=@Birthday," +
+                        cmd.CommandText = "Update Patient set FirstName=@FirstName,LastName=@LastName,Sex=@Sex,Birthday=@Birthday," +
                                           "Address=@Address,City=@City,Province=@Province,PostalCode=@PostalCode,PhoneNum=@PhoneNum" +
                                           " where PatientId = @id2;";
-                    cmd.Parameters.AddWithValue("@FirstName", tbFirstName.Text);
-                    cmd.Parameters.AddWithValue("@LastName", tbLastName.Text);
-                    cmd.Parameters.AddWithValue("@Sex", tbSex.Text);
-                    cmd.Parameters.AddWithValue("@Birthday", tbDob.Text);
-                    cmd.Parameters.AddWithValue("@Address", tbAddress.Text);
-                    cmd.Parameters.AddWithValue("@City", tbCity.Text);
-                    cmd.Parameters.AddWithValue("@Province", ddlProvince.SelectedItem.Value);
-                    cmd.Parameters.AddWithValue("@PostalCode", tbPostalCode.Text);
-                    cmd.Parameters.AddWithValue("@PhoneNum", tbPhoneNum.Text);
-                    cmd.Parameters.AddWithValue("@id2", Session["PatientId"]);
-                    cmd.ExecuteNonQuery();
-
-                    List<string> history = new List<string>();
-                    foreach (ListItem item in cblHistory.Items) {
-                        if (item.Selected) {
-                            history.Add(item.Value);
-                        }
-                    }
-
-                    List<string> symptoms = new List<string>();
-                    foreach (ListItem item in cblSymptom.Items) {
-                        if (item.Selected) {
-                            symptoms.Add(item.Value);
-                        }
-                    }
-
-                    foreach (string item in history) {
-                        cmd.CommandText = "INSERT INTO PatientHistory VALUES(@PatientID,@HistoryId)";
-                        cmd.Parameters.AddWithValue("@PatientId", Session["PatientId"]);
-                        cmd.Parameters.AddWithValue("@HistoryId", item);
+                        cmd.Parameters.AddWithValue("@FirstName", tbFirstName.Text);
+                        cmd.Parameters.AddWithValue("@LastName", tbLastName.Text);
+                        cmd.Parameters.AddWithValue("@Sex", tbSex.Text);
+                        cmd.Parameters.AddWithValue("@Birthday", Convert.ToDateTime(tbDob.Text));
+                        cmd.Parameters.AddWithValue("@Address", tbAddress.Text);
+                        cmd.Parameters.AddWithValue("@City", tbCity.Text);
+                        cmd.Parameters.AddWithValue("@Province", ddlProvince.SelectedItem.Value);
+                        cmd.Parameters.AddWithValue("@PostalCode", tbPostalCode.Text);
+                        cmd.Parameters.AddWithValue("@PhoneNum", tbPhoneNum.Text);
+                        cmd.Parameters.AddWithValue("@id2", Session["PatientId"]);
                         cmd.ExecuteNonQuery();
-                        cmd.Parameters.Clear();
-                    }
 
-                    foreach (string item in symptoms) {
-                        cmd.CommandText = "INSERT INTO PatientSymptom VALUES(@PatientID,@SymptomId)";
-                        cmd.Parameters.AddWithValue("@PatientId", Session["PatientId"]);
-                        cmd.Parameters.AddWithValue("@SymptomId", item);
-                        cmd.ExecuteNonQuery();
-                        cmd.Parameters.Clear();
+                        List<string> history = new List<string>();
+                        foreach (ListItem item in cblHistory.Items) {
+                            if (item.Selected) {
+                                history.Add(item.Value);
+                            }
+                        }
+
+                        List<string> symptoms = new List<string>();
+                        foreach (ListItem item in cblSymptom.Items) {
+                            if (item.Selected) {
+                                symptoms.Add(item.Value);
+                            }
+                        }
+
+                        foreach (string item in history) {
+                            cmd.CommandText = "INSERT INTO PatientHistory VALUES(@PatientID,@HistoryId)";
+                            cmd.Parameters.AddWithValue("@PatientId", Session["PatientId"]);
+                            cmd.Parameters.AddWithValue("@HistoryId", item);
+                            cmd.ExecuteNonQuery();
+                            cmd.Parameters.Clear();
+                        }
+
+                        foreach (string item in symptoms) {
+                            cmd.CommandText = "INSERT INTO PatientSymptom VALUES(@PatientID,@SymptomId)";
+                            cmd.Parameters.AddWithValue("@PatientId", Session["PatientId"]);
+                            cmd.Parameters.AddWithValue("@SymptomId", item);
+                            cmd.ExecuteNonQuery();
+                            cmd.Parameters.Clear();
+                        }
+
+                        lblUpdateResult.Text = "Update successfull!";
+                        conn.Close();
                     }
-                    conn.Close();
+                } catch (SqlException ex) {
+                    lblUpdateResult.Text = ex.Message;
+                } catch (Exception ex) {
+                    lblUpdateResult.Text = ex.Message;
                 }
+                
             }
         }
     }

@@ -92,6 +92,7 @@
             <br />
             <asp:Button ID="tbEdit" runat="server" Text="Edit Information" OnClick="tbEdit_Click" />
             <br />
+            <asp:Label ID="lblUpdateResult" runat="server" Text="Label"></asp:Label>
             <br />
             <br />
             <asp:LinkButton ID="lbReturn" runat="server" OnClick="lbReturn_Click">Return to View All Patients</asp:LinkButton>
