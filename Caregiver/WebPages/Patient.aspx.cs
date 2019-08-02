@@ -28,7 +28,8 @@ namespace Caregiver.Web_Pages {
                     using (SqlCommand cmd = new SqlCommand()) {
                         conn.Open();
                         cmd.Connection = conn;
-                        cmd.CommandText = "Select * from Patient;";
+                        cmd.CommandText = "SELECT * FROM Patient WHERE PatientId=@id;";
+                        cmd.Parameters.AddWithValue("@id", Session["PatientId"]);
 
                         SqlDataReader reader = cmd.ExecuteReader();
 
@@ -113,11 +114,11 @@ namespace Caregiver.Web_Pages {
 
                         reader.Close();
 
-                        cmd.CommandText = "SELECT h.Name FROM History h join PatientHistory " +
-                            "on h.HistoryId = PatientHistory.HistoryId join Patient " +
-                            "on Patient.PatientId = PatientHistory.PatientId " +
-                            "where Patient.PatientId = @id";
-                        cmd.Parameters.AddWithValue("@id", Session["PatientId"]);
+                        cmd.CommandText = "SELECT h.Name FROM History h JOIN PatientHistory " +
+                            "ON h.HistoryId = PatientHistory.HistoryId JOIN Patient " +
+                            "ON Patient.PatientId = PatientHistory.PatientId " +
+                            "WHERE Patient.PatientId = @id";
+                        
 
                         SqlDataReader rdr = cmd.ExecuteReader();
                         if (rdr.HasRows) {
@@ -148,11 +149,10 @@ namespace Caregiver.Web_Pages {
                         }
                         rdr.Close();
 
-                        cmd.CommandText = "SELECT s.Name FROM Symptom s join PatientSymptom " +
-                            "on s.SymptomId = PatientSymptom.SymptomId join Patient " +
-                            "on Patient.PatientId = PatientSymptom.PatientId " +
-                            "where Patient.PatientId = @id2; ";
-                        cmd.Parameters.AddWithValue("@id2", Session["PatientId"]);
+                        cmd.CommandText = "SELECT s.Name FROM Symptom s JOIN PatientSymptom " +
+                            "ON s.SymptomId = PatientSymptom.SymptomId JOIN Patient " +
+                            "ON Patient.PatientId = PatientSymptom.PatientId " +
+                            "WHERE Patient.PatientId = @id; ";
 
                         SqlDataReader rdr3 = cmd.ExecuteReader();
                         if (rdr3.HasRows) {
