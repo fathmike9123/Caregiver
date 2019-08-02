@@ -14,9 +14,13 @@
             <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Size="XX-Large" Text="Reports Page"></asp:Label>
             <br />
             <br />
-            <asp:Chart ID="Chart1" runat="server" Height="455px" Width="579px">
+            <asp:Button ID="btnHistory" runat="server" OnClick="btnHistory_Click" Text="By History" />
+&nbsp;<asp:Button ID="btnSymptom" runat="server" Text="By Symptom" OnClick="btnSymptom_Click" />
+            &nbsp;<asp:Button ID="btnSex" runat="server" OnClick="btnSex_Click" Text="By Sex" Width="89px" />
+            <br />
+            <asp:Chart ID="chartReport" runat="server" Height="455px" Width="579px" DataSourceID="SqlDataSource1">
                 <series>
-                    <asp:Series Name="Series1">
+                    <asp:Series Name="Series1" XValueMember="XValue" YValueMembers="YValue">
                     </asp:Series>
                 </series>
                 <chartareas>
@@ -24,6 +28,9 @@
                     </asp:ChartArea>
                 </chartareas>
             </asp:Chart>
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:CaregiverConnectionString %>" SelectCommand="SELECT h.Name as XValue, COUNT(*) as YValue
+FROM PatientHistory p INNER JOIN History h ON p.HistoryId = h.HistoryId
+GROUP BY h.Name;"></asp:SqlDataSource>
             <br />
             <br />
             <asp:LinkButton ID="lbReturn" runat="server" OnClick="lbReturn_Click">Return to View All Patients</asp:LinkButton>

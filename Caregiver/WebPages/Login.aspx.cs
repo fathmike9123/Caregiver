@@ -50,7 +50,6 @@ namespace Caregiver {
                         }
                     } catch (SqlException ex) {
                         Response.Write("<script>alert('An error has occured with the database');</script>");
-                        System.Diagnostics.Debug.WriteLine(ex.Message);
                     }
                 }
             }
