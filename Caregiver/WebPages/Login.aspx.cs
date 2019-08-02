@@ -9,6 +9,9 @@ using System.Data.SqlClient;
 namespace Caregiver {
     public partial class Login : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
+            if (!IsPostBack) {
+                warningMessage.Style.Add("display", "none");
+            }
             Session["IsRegisteredUser"] = false;
             Session["IsAdmin"] = false;
         }
@@ -16,9 +19,12 @@ namespace Caregiver {
         protected void lbSignIn_Click(object sender, EventArgs e) {
             string email = tbEmail.Text;
             string password = tbPassword.Text;
+            
 
             if (email == "" || password == "") {
-                Response.Write("<script>alert('You must fill in all text boxes.');</script>");
+                warningMessage.Style.Add("display", "inline");
+                warningMessage.InnerHtml = "You must fill in all text boxes!";
+                //Response.Write("<script>alert('You must fill in all text boxes.');</script>");
             } else {
                 string conString = "server=(local);database=Caregiver;Integrated Security=SSPI;";
                 using(SqlConnection conn = new SqlConnection(conString)) {
@@ -43,10 +49,9 @@ namespace Caregiver {
                                 }
                             }
                             Session["IsRegisteredUser"] = false;
-                            Response.Write("<script>alert('Invalid username & password.');</script>");
+                            warningMessage.Style.Add("display", "inline");
+                            warningMessage.InnerHtml = "Invalid email address and password!";
                             reader.Close();
-
-
                         }
                     } catch (SqlException ex) {
                         Response.Write("<script>alert('An error has occured with the database');</script>");
