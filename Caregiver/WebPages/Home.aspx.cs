@@ -14,8 +14,10 @@ namespace Caregiver.Web_Pages {
                 }
 
                 if ((bool)Session["IsAdmin"]) {
+                    databaseDiv.Visible = true;
                     lbDatabase.Visible = true;
                 } else {
+                    databaseDiv.Visible = false;
                     lbDatabase.Visible = false;
                 }
             }            

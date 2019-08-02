@@ -5,30 +5,78 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <link rel="stylesheet" href="../css/bootstrap.css" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <style>
+        .background-menu {
+            text-align: center;
+            padding: 7%;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
-            <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Size="XX-Large" Text="Home Page"></asp:Label>
-            <br />
-            <br />
-            <asp:LinkButton ID="lbViewAllPatients" runat="server" OnClick="lbViewAllPatients_Click">View All Patients</asp:LinkButton>
-            <br />
-            <br />
-            <asp:LinkButton ID="lbCreateNew" runat="server" OnClick="lbCreateNew_Click">Create New Patient</asp:LinkButton>
-            <br />
-            <br />
-            <asp:LinkButton ID="lbSearch" runat="server" OnClick="lbSearch_Click">Search for Patient</asp:LinkButton>
-            <br />
-            <br />
-            <asp:LinkButton ID="lbDatabase" runat="server" OnClick="lbDatabase_Click">View Database (Admins Only)</asp:LinkButton>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <asp:LinkButton ID="lbSignOut" runat="server" OnClick="lbSignOut_Click">Sign Out</asp:LinkButton>
+        <nav class="navbar navbar-light bg-light  ">
+            <img src="../Images/Caregiver Logo.png" height="30" alt="" />
+            <asp:LinkButton ID="lbSignOut" runat="server" OnClick="lbSignOut_Click" class="btn btn-light">Sign Out</asp:LinkButton>
+        </nav>
+
+        <br />
+        <h1 class="display-1 text-center">Home Page</h1>
+
+
+
+        <div class="container-fluid background-menu">
+            <div class="card-deck">
+
+                <div class="card shadow-sm p-3 mb-5 bg-white rounded">                    
+                    <asp:LinkButton ID="lbViewAllPatients" runat="server" OnClick="lbViewAllPatients_Click" style="text-decoration:none">
+                        <img src="https://t3.ftcdn.net/jpg/00/21/75/28/500_F_21752821_B4rsSwMGCuVU40MRuJdjx0QwGNhLP3sQ.jpg" class="card-img-top"/>
+                        <div class="card-body">
+                            <h5 class="card-title">View All Patients</h5>
+                            <p class="card-text">See all patients in the system.</p>
+                        </div>
+                    </asp:LinkButton>
+                </div>
+
+
+                <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+                    <asp:LinkButton ID="lbCreateNew" runat="server" OnClick="lbCreateNew_Click" style="text-decoration:none">
+                        <img src="https://t3.ftcdn.net/jpg/00/21/75/28/500_F_21752821_B4rsSwMGCuVU40MRuJdjx0QwGNhLP3sQ.jpg" class="card-img-top"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Create New Patient</h5>
+                            <p class="card-text">Add a new patient to the system.</p>
+                        </div>
+                    </asp:LinkButton>
+                </div>
+
+
+
+                <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+                    <asp:LinkButton ID="lbSearch" runat="server" OnClick="lbSearch_Click" style="text-decoration:none">
+                        <img src="https://t3.ftcdn.net/jpg/00/21/75/28/500_F_21752821_B4rsSwMGCuVU40MRuJdjx0QwGNhLP3sQ.jpg" class="card-img-top"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Search for Patients</h5>
+                            <p class="card-text">Search patients by a criteria.</p>
+                        </div>
+                    </asp:LinkButton>
+                </div>
+
+
+                <div ID="databaseDiv" runat="server" class="card shadow-sm p-3 mb-5 bg-white rounded">
+                    <asp:LinkButton ID="lbDatabase" runat="server" OnClick="lbDatabase_Click" style="text-decoration:none">
+                        <img src="https://t3.ftcdn.net/jpg/00/21/75/28/500_F_21752821_B4rsSwMGCuVU40MRuJdjx0QwGNhLP3sQ.jpg" class="card-img-top"/>
+                        <div class="card-body">
+                            <h5 class="card-title">View Database</h5>
+                            <p class="card-text">View records in the system.</p>
+                        </div>
+                    </asp:LinkButton>
+                </div>
+
+            </div>
         </div>
     </form>
+    <script type="text/javascript" src="../js/bootstrap.min.js" />
+    <script type="text/javascript" src="../js/bootstrap.js" />
 </body>
 </html>

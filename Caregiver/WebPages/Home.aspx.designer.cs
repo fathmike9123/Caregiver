@@ -22,13 +22,13 @@ namespace Caregiver.Web_Pages {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// Label1 control.
+        /// lbSignOut control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.LinkButton lbSignOut;
         
         /// <summary>
         /// lbViewAllPatients control.
@@ -58,6 +58,15 @@ namespace Caregiver.Web_Pages {
         protected global::System.Web.UI.WebControls.LinkButton lbSearch;
         
         /// <summary>
+        /// databaseDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl databaseDiv;
+        
+        /// <summary>
         /// lbDatabase control.
         /// </summary>
         /// <remarks>
@@ -65,14 +74,5 @@ namespace Caregiver.Web_Pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lbDatabase;
-        
-        /// <summary>
-        /// lbSignOut control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbSignOut;
     }
 }
