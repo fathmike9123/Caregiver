@@ -29,8 +29,8 @@
         <div class="container-fluid background-menu">
             <div class="card-deck">
 
-                <div class="card shadow-sm p-3 mb-5 bg-white rounded">                    
-                    <asp:LinkButton ID="lbViewAllPatients" runat="server" OnClick="lbViewAllPatients_Click" style="text-decoration:none">
+                <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+                    <asp:LinkButton ID="lbViewAllPatients" runat="server" OnClick="lbViewAllPatients_Click" Style="text-decoration: none">
                         <img src="https://t3.ftcdn.net/jpg/00/21/75/28/500_F_21752821_B4rsSwMGCuVU40MRuJdjx0QwGNhLP3sQ.jpg" class="card-img-top"/>
                         <div class="card-body">
                             <h5 class="card-title">View All Patients</h5>
@@ -41,7 +41,7 @@
 
 
                 <div class="card shadow-sm p-3 mb-5 bg-white rounded">
-                    <asp:LinkButton ID="lbCreateNew" runat="server" OnClick="lbCreateNew_Click" style="text-decoration:none">
+                    <asp:LinkButton ID="lbCreateNew" runat="server" OnClick="lbCreateNew_Click" Style="text-decoration: none">
                         <img src="https://t3.ftcdn.net/jpg/00/21/75/28/500_F_21752821_B4rsSwMGCuVU40MRuJdjx0QwGNhLP3sQ.jpg" class="card-img-top"/>
                         <div class="card-body">
                             <h5 class="card-title">Create New Patient</h5>
@@ -53,7 +53,7 @@
 
 
                 <div class="card shadow-sm p-3 mb-5 bg-white rounded">
-                    <asp:LinkButton ID="lbSearch" runat="server" OnClick="lbSearch_Click" style="text-decoration:none">
+                    <asp:LinkButton ID="lbSearch" runat="server" OnClick="lbSearch_Click" Style="text-decoration: none">
                         <img src="https://t3.ftcdn.net/jpg/00/21/75/28/500_F_21752821_B4rsSwMGCuVU40MRuJdjx0QwGNhLP3sQ.jpg" class="card-img-top"/>
                         <div class="card-body">
                             <h5 class="card-title">Search for Patients</h5>
@@ -63,8 +63,8 @@
                 </div>
 
 
-                <div ID="databaseDiv" runat="server" class="card shadow-sm p-3 mb-5 bg-white rounded">
-                    <asp:LinkButton ID="lbDatabase" runat="server" OnClick="lbDatabase_Click" style="text-decoration:none">
+                <div id="databaseDiv" runat="server" class="card shadow-sm p-3 mb-5 bg-white rounded">
+                    <asp:LinkButton ID="lbDatabase" runat="server" OnClick="lbDatabase_Click" Style="text-decoration: none">
                         <img src="https://t3.ftcdn.net/jpg/00/21/75/28/500_F_21752821_B4rsSwMGCuVU40MRuJdjx0QwGNhLP3sQ.jpg" class="card-img-top"/>
                         <div class="card-body">
                             <h5 class="card-title">View Database</h5>

@@ -9,17 +9,17 @@ namespace Caregiver.Web_Pages {
     public partial class Home : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                if (!(bool)Session["IsRegisteredUser"]) {
-                    Server.Transfer("Login.aspx");
-                }
+                //if (!(bool)Session["IsRegisteredUser"]) {
+                //    Server.Transfer("Login.aspx");
+                //}
 
-                if ((bool)Session["IsAdmin"]) {
-                    databaseDiv.Visible = true;
-                    lbDatabase.Visible = true;
-                } else {
-                    databaseDiv.Visible = false;
-                    lbDatabase.Visible = false;
-                }
+                //if ((bool)Session["IsAdmin"]) {
+                //    databaseDiv.Visible = true;
+                //    lbDatabase.Visible = true;
+                //} else {
+                //    databaseDiv.Visible = false;
+                //    lbDatabase.Visible = false;
+                //}
             }            
         }
 
