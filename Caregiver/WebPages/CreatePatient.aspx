@@ -69,14 +69,6 @@
                 </div>
             </div>
 
-
-
-
-
-
-
-
-
             <div class="form-group">
                 <label for="inputAddress">Date of Birth (YYYY-MM-DD):</label>
                 <asp:TextBox ID="tbDob" runat="server" class="form-control" placeholder="Date of Birth"></asp:TextBox>
@@ -129,7 +121,7 @@
                 <div class="col-sm-2">History:</div>
                 <div class="col-sm-4">
                     <div class="form-check">
-                        <asp:CheckBoxList ID="cblHistory" runat="server" Style="text-align: left">
+                        <asp:CheckBoxList ID="cblHistory" runat="server" >
                             <asp:ListItem Value="1">Heart Disease</asp:ListItem>
                             <asp:ListItem Value="2">Smoking</asp:ListItem>
                             <asp:ListItem Value="3">Diabetes</asp:ListItem>

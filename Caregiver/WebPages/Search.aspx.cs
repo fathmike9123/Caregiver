@@ -10,20 +10,23 @@ namespace Caregiver.Web_Pages {
     public partial class Search : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                if (!(bool)Session["IsRegisteredUser"]) {
-                    Server.Transfer("Login.aspx");
-                }
+                //if (!(bool)Session["IsRegisteredUser"]) {
+                //    Server.Transfer("Login.aspx");
+                //}
                 tbText.Style.Add("display", "inline");
                 rdbSex.Style.Add("display", "none");
                 rdbSymptoms.Style.Add("display", "none");
                 ddlProvince.Style.Add("display", "none");
                 rdbHistory.Style.Add("display", "none");
+                divRdbSex.Style.Add("display", "none");
             } else {
                 tbText.Style.Add("display", "none");
                 rdbSex.Style.Add("display", "none");
+                divRdbSex.Style.Add("display", "none");
                 rdbSymptoms.Style.Add("display", "none");
                 ddlProvince.Style.Add("display", "none");
                 rdbHistory.Style.Add("display", "none");
+                warningMessage.Style.Add("display", "none");
                 DisplaySelected();
             }
 
@@ -95,7 +98,8 @@ namespace Caregiver.Web_Pages {
                                 gridViewResult.DataSource = reader;
                                 gridViewResult.DataBind();
                             } else {
-                                Response.Write("<script>alert('There are no results.');</script>");
+                                warningMessage.Style.Add("display", "inline");
+                                warningMessage.InnerHtml = "There are no results!";
                                 ClearGridView();
                             }
                             reader.Close();
@@ -105,7 +109,8 @@ namespace Caregiver.Web_Pages {
                     }
                 }
             } else {
-                Response.Write("<script>alert('Search criteria must not be empty.');</script>");
+                warningMessage.Style.Add("display", "inline");
+                warningMessage.InnerHtml = "Search criteria must not be empty!";
             }
         }
 
@@ -137,7 +142,8 @@ namespace Caregiver.Web_Pages {
                             gridViewResult.DataSource = reader;
                             gridViewResult.DataBind();
                         } else {
-                            Response.Write("<script>alert('There are no results.');</script>");
+                            warningMessage.Style.Add("display", "inline");
+                            warningMessage.InnerHtml = "There are no results!";
                             ClearGridView();
                         }
                         reader.Close();
@@ -164,6 +170,7 @@ namespace Caregiver.Web_Pages {
         private void DisplaySelected() {
             if (ddlChoice.SelectedValue == "Sex") {
                 rdbSex.Style.Add("display", "inline");
+                divRdbSex.Style.Add("display", "block");
             } else if (ddlChoice.SelectedValue == "Province") {
                 ddlProvince.Style.Add("display", "inline");
             } else if (ddlChoice.SelectedValue == "Symptoms") {
