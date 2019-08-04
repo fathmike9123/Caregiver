@@ -31,15 +31,6 @@ namespace Caregiver.Web_Pages {
         protected global::System.Web.UI.WebControls.LinkButton lbReturn;
         
         /// <summary>
-        /// PlaceHolder2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PlaceHolder2;
-        
-        /// <summary>
         /// lbReports control.
         /// </summary>
         /// <remarks>
@@ -47,5 +38,14 @@ namespace Caregiver.Web_Pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lbReports;
+        
+        /// <summary>
+        /// PlaceHolder2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PlaceHolder2;
     }
 }

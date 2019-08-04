@@ -8,6 +8,12 @@
     <link href="styles/main.css" rel="stylesheet" />
     <link rel="stylesheet" href="../css/bootstrap.css" />
     <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <style>
+        .background-menu {
+            text-align: center;
+            padding: 7%;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -18,24 +24,17 @@
 
         <br />
         <h1 class="display-1 text-center">View All Patients</h1>
-
+        <br />
+        <div style="text-align: center">
+            <asp:LinkButton ID="lbReports" runat="server" OnClick="lbReports_Click" class="btn btn-primary">View Patient Reports</asp:LinkButton>
+        </div>
         <div>
             <br />
             <br />
             <div class="container-fluid background-menu">
-                <div class="card-deck" ID="PlaceHolder2" runat="server">
+                <div class="card-deck" id="PlaceHolder2" runat="server">
                 </div>
             </div>
-            <%--<asp:PlaceHolder ID="PlaceHolder1" runat="server"></asp:PlaceHolder>--%>
-            <br />
-            <br />
-            <br />
-            <br />
-            <asp:LinkButton ID="lbReports" runat="server" OnClick="lbReports_Click">View Patient Reports</asp:LinkButton>
-            <br />
-            <br />
-
-            <br />
         </div>
     </form>
     <script type="text/javascript" src="../js/bootstrap.min.js" />
