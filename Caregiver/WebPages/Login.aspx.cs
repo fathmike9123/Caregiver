@@ -9,9 +9,6 @@ using System.Data.SqlClient;
 namespace Caregiver {
     public partial class Login : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
-            if (!IsPostBack) {
-                warningMessage.Style.Add("display", "none");
-            }
             Session["IsRegisteredUser"] = false;
             Session["IsAdmin"] = false;
         }

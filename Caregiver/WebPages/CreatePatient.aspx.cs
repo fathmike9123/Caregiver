@@ -17,53 +17,58 @@ namespace Caregiver.Web_Pages {
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
 
-                if (!(bool)Session["IsRegisteredUser"]) {
-                    Server.Transfer("Login.aspx");
-                }
+                //if (!(bool)Session["IsRegisteredUser"]) {
+                //    Server.Transfer("Login.aspx");
+                //}
             }
         }
 
         protected void lbAdd_Click(object sender, EventArgs e) {
-            string fName = tbFirstName.Text;
-            string lName = tbLastName.Text;
-            char sex;
-            if (rdbSex.SelectedIndex == 0) {
-                sex = 'M';
+            if (tbFirstName.Text == "" || tbLastName.Text == "" || tbDob.Text == "" || tbPhoneNum.Text == "" || tbAddress.Text == "" || tbCity.Text == "" || tbPostalCode.Text == "") {
+                warningMessage.Style.Add("display", "inline");
+                warningMessage.InnerHtml = "You must fill in all text boxes!";
             } else {
-                sex = 'F';
-            }
-            string dob = tbDob.Text;
-
-
-            List<string> history = new List<string>();
-            foreach (ListItem item in cblHistory.Items) {
-                if (item.Selected) {
-                    history.Add(item.Value);
+                string fName = tbFirstName.Text;
+                string lName = tbLastName.Text;
+                char sex;
+                if (rdbSex.SelectedIndex == 0) {
+                    sex = 'M';
+                } else {
+                    sex = 'F';
                 }
-            }
+                string dob = tbDob.Text;
 
-            string address = tbAddress.Text;
-            string city = tbCity.Text;
-            string province = ddlProvince.SelectedValue;
-            string postalCode = tbPostalCode.Text;
-            string phoneNum = tbPhoneNum.Text;
 
-            List<string> symptoms = new List<string>();
-            foreach (ListItem item in cblSymptom.Items) {
-                if (item.Selected) {
-                    symptoms.Add(item.Value);
+                List<string> history = new List<string>();
+                foreach (ListItem item in cblHistory.Items) {
+                    if (item.Selected) {
+                        history.Add(item.Value);
+                    }
                 }
+
+                string address = tbAddress.Text;
+                string city = tbCity.Text;
+                string province = ddlProvince.SelectedValue;
+                string postalCode = tbPostalCode.Text;
+                string phoneNum = tbPhoneNum.Text;
+
+                List<string> symptoms = new List<string>();
+                foreach (ListItem item in cblSymptom.Items) {
+                    if (item.Selected) {
+                        symptoms.Add(item.Value);
+                    }
+                }
+
+                Classes.Patient patient = new Classes.Patient(fName, lName, sex, dob);
+                patient.SetLocation(address, city, province, postalCode, phoneNum);
+                patient.History = history;
+                patient.Symptoms = symptoms;
+
+                DatabaseAccess db = new DatabaseAccess();
+                AddNewPatient(patient);
+
+                Server.Transfer("Home.aspx");
             }
-
-            Classes.Patient patient = new Classes.Patient(fName, lName, sex, dob);
-            patient.SetLocation(address, city, province, postalCode, phoneNum);
-            patient.History = history;
-            patient.Symptoms = symptoms;
-
-            DatabaseAccess db = new DatabaseAccess();
-            AddNewPatient(patient);
-
-            Server.Transfer("Home.aspx");
         }
 
         private void AddNewPatient(Classes.Patient patient) {
@@ -92,7 +97,7 @@ namespace Caregiver.Web_Pages {
                         cmd.Parameters.AddWithValue("@PhoneNum", patient.PhoneNum);
 
                         int patientID = Convert.ToInt32(cmd.ExecuteScalar());
-                        
+
                         foreach (string item in patient.History) {
                             cmd.CommandText = "INSERT INTO PatientHistory VALUES(@PatientID,@HistoryId)";
                             cmd.Parameters.AddWithValue("@PatientId", patientID);
@@ -112,7 +117,7 @@ namespace Caregiver.Web_Pages {
                     }
                 } catch (SqlException ex) {
                     Response.Write("<script>alert('An error has occured with the database');</script>");
-                    
+
                 }
             }
         }

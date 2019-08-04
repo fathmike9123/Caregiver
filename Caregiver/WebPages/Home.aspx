@@ -13,6 +13,10 @@
             padding: 7%;
         }
     </style>
+    <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.mask.js" ></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js" ></script>
+    <script type="text/javascript" src="../js/bootstrap.js" ></script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -76,7 +80,5 @@
             </div>
         </div>
     </form>
-    <script type="text/javascript" src="../js/bootstrap.min.js" />
-    <script type="text/javascript" src="../js/bootstrap.js" />
 </body>
 </html>

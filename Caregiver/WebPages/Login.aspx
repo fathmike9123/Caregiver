@@ -17,7 +17,10 @@
             transform: translate(-50%, -50%);
         }
     </style>
-
+    <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.mask.js" ></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js" ></script>
+    <script type="text/javascript" src="../js/bootstrap.js" ></script>
 </head>
 <body>
     <br />
@@ -28,7 +31,7 @@
                 <br />
                 <h1 class="display-4">Sign In</h1>
                 <br />
-                <div ID="warningMessage" runat="server" class="alert alert-warning" role="alert">
+                <div ID="warningMessage" runat="server" class="alert alert-warning" role="alert" style="display: none;">
                     Invalid username & password.
                 </div>
                 <br />
@@ -50,8 +53,5 @@
             </div>
         </form>
     </div>
-
-    <script type="text/javascript" src="../js/bootstrap.min.js" />
-    <script type="text/javascript" src="../js/bootstrap.js" />
 </body>
 </html>
