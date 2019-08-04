@@ -56,8 +56,8 @@ namespace Caregiver.Web_Pages {
                 SearchCriteria(toBeAppended, "@City", tbText.Text);
 
             } else if (selectedValue == "Phone Number") {
-                string toBeAppended = "PhoneNumber LIKE '%'+@PhoneNumber+'%'";
-                SearchCriteria(toBeAppended, "@PhoneNumber", tbText.Text);
+                string toBeAppended = "PhoneNum LIKE '%'+@PhoneNum+'%'";
+                SearchCriteria(toBeAppended, "@PhoneNum", tbText.Text);
 
             } else if (selectedValue == "Address") {
                 string toBeAppended = "Address LIKE '%'+@Address+'%'";
