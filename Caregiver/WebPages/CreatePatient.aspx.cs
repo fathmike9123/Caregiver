@@ -49,7 +49,7 @@ namespace Caregiver.Web_Pages {
                 string address = tbAddress.Text;
                 string city = tbCity.Text;
                 string province = ddlProvince.SelectedValue;
-                string postalCode = tbPostalCode.Text;
+                string postalCode = tbPostalCode.Text.ToUpper();
                 string phoneNum = tbPhoneNum.Text;
 
                 List<string> symptoms = new List<string>();
@@ -93,7 +93,7 @@ namespace Caregiver.Web_Pages {
                         cmd.Parameters.AddWithValue("@Address", patient.Address);
                         cmd.Parameters.AddWithValue("@City", patient.City);
                         cmd.Parameters.AddWithValue("@Province", patient.Province);
-                        cmd.Parameters.AddWithValue("@PostalCode", patient.PostalCode);
+                        cmd.Parameters.AddWithValue("@PostalCode", patient.PostalCode.ToUpper());
                         cmd.Parameters.AddWithValue("@PhoneNum", patient.PhoneNum);
 
                         int patientID = Convert.ToInt32(cmd.ExecuteScalar());

@@ -418,7 +418,7 @@ namespace Caregiver.Web_Pages {
                         cmd.Parameters.AddWithValue("@Address", tbAddress.Text);
                         cmd.Parameters.AddWithValue("@City", tbCity.Text);
                         cmd.Parameters.AddWithValue("@Province", ddlProvince.SelectedItem.Value);
-                        cmd.Parameters.AddWithValue("@PostalCode", tbPostalCode.Text);
+                        cmd.Parameters.AddWithValue("@PostalCode", tbPostalCode.Text.ToUpper());
                         cmd.Parameters.AddWithValue("@PhoneNum", tbPhoneNum.Text);
                         cmd.Parameters.AddWithValue("@id2", Session["PatientId"]);
                         cmd.ExecuteNonQuery();
