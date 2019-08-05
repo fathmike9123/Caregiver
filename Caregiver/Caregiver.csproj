@@ -83,7 +83,6 @@
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\jquery-3.4.1.min.js" />
     <Content Include="js\jquery.mask.js" />
-    <Content Include="styles\main.css" />
     <Content Include="WebPages\CreatePatient.aspx" />
     <Content Include="WebPages\DatabaseAccess.aspx" />
     <Content Include="WebPages\Home.aspx" />
