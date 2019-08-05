@@ -94,15 +94,6 @@ namespace Caregiver.Web_Pages {
         protected global::System.Web.UI.WebControls.Button btnPatientSymptom;
         
         /// <summary>
-        /// grdResult control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdResult;
-        
-        /// <summary>
         /// divUsers control.
         /// </summary>
         /// <remarks>
@@ -353,5 +344,14 @@ namespace Caregiver.Web_Pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnDeletePatient;
+        
+        /// <summary>
+        /// grdResult control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView grdResult;
     }
 }

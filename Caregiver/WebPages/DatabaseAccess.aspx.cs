@@ -143,10 +143,10 @@ namespace Caregiver.Web_Pages {
                                 tbDob.Text = reader[4].ToString().Split(' ')[0];
                                 tbAddress.Text = reader[5].ToString();
                                 tbCity.Text = reader[6].ToString();
-
+                                
                                 for (int i = 0; i < ddlProvince.Items.Count; i++) {
                                     if (ddlProvince.Items[i].Value == reader[7].ToString()) {
-                                        ddlProvince.Items[i].Selected = true;
+                                        ddlProvince.SelectedIndex = i;
                                     }
                                 }
 
