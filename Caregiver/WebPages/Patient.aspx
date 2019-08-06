@@ -24,7 +24,10 @@
             <br />
             <br />
             Sex:
-            <asp:TextBox ID="tbSex" runat="server"></asp:TextBox>
+            <asp:RadioButtonList ID="rdbSex" runat="server" RepeatDirection="Horizontal">
+                <asp:ListItem Selected="True" Value="M">Male</asp:ListItem>
+                <asp:ListItem Value="F">Female</asp:ListItem>
+            </asp:RadioButtonList>
             <br />
             Date of Birth:
             <asp:TextBox ID="tbDob" runat="server"></asp:TextBox>
@@ -91,6 +94,7 @@
             <asp:Label ID="lbl4" runat="server" Text="Label"></asp:Label>
             <br />
             <asp:Button ID="tbEdit" runat="server" Text="Edit Information" OnClick="tbEdit_Click" />
+            <asp:Button ID="tbSave" runat="server" Text="Save Information" OnClick="tbSave_Click" />
             <br />
             <asp:Label ID="lblUpdateResult" runat="server" Text="Label"></asp:Label>
             <br />

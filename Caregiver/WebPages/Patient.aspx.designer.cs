@@ -58,13 +58,13 @@ namespace Caregiver.Web_Pages {
         protected global::System.Web.UI.WebControls.TextBox tbLastName;
         
         /// <summary>
-        /// tbSex control.
+        /// rdbSex control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbSex;
+        protected global::System.Web.UI.WebControls.RadioButtonList rdbSex;
         
         /// <summary>
         /// tbDob control.
@@ -200,6 +200,15 @@ namespace Caregiver.Web_Pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button tbEdit;
+        
+        /// <summary>
+        /// tbSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button tbSave;
         
         /// <summary>
         /// lblUpdateResult control.

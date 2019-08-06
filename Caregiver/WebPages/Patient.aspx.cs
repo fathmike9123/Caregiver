@@ -13,15 +13,19 @@ namespace Caregiver.Web_Pages {
         private Classes.Patient patient;
 
         protected void Page_Load(object sender, EventArgs e) {
-            // initialize patient object
-            patient = new Classes.Patient();
+            
+
+            SetEnabled(false);
+            tbEdit.Style.Add("display", "inline");
+            tbSave.Style.Add("display", "none");
 
             if (!IsPostBack) {
-                if (!(bool)Session["IsRegisteredUser"]) {
-                    Server.Transfer("Login.aspx");
-                }
+                //if (!(bool)Session["IsRegisteredUser"]) {
+                //    Server.Transfer("Login.aspx");
+                //}
 
-                Response.Write("<script>alert('"+Session["PatientId"] +"');</script>");
+                // initialize patient object
+                patient = new Classes.Patient();
 
                 using (SqlConnection conn = new SqlConnection()) {
                     conn.ConnectionString = "server=(local);database=Caregiver;integrated security=SSPI;";
@@ -33,6 +37,7 @@ namespace Caregiver.Web_Pages {
 
                         SqlDataReader reader = cmd.ExecuteReader();
 
+                        // Get all of the patient's information
                         while (reader.Read()) {
                             // reader[0] = id
                             // reader[1] = first name
@@ -53,59 +58,24 @@ namespace Caregiver.Web_Pages {
                             patient.Province = (string)reader[7];
                             patient.PostalCode = (string)reader[8];
                             patient.PhoneNum = (string)reader[9];
-                            if ((string)reader[3] == "M") {
-                                imgUser.ImageUrl = "./Images/Male.png";
-                            } else {
-                                imgUser.ImageUrl = "./Images/Female.png";
-                            }
-
+                            
                             tbFirstName.Text = (string)reader[1];
                             tbLastName.Text = (string)reader[2];
-                            tbSex.Text = (string)reader[3];
-                            tbDob.Text = reader[4].ToString();
+                            if ((string)reader[3] == "M") {
+                                rdbSex.SelectedIndex = 0;
+                                imgUser.ImageUrl = "/Images/Male.png";
+                            } else {
+                                rdbSex.SelectedIndex = 1;
+                                imgUser.ImageUrl = "/Images/Female.png";
+                            }
+                            tbDob.Text = reader[4].ToString().Split(' ')[0];
                             tbAddress.Text = (string)reader[5];
                             tbCity.Text = (string)reader[6];
 
-                            switch ((string)reader[7]) {
-                                case "ON":
-                                    ddlProvince.Items[0].Selected = true;
-                                    break;
-                                case "AB":
-                                    ddlProvince.Items[1].Selected = true;
-                                    break;
-                                case "BC":
-                                    ddlProvince.Items[2].Selected = true;
-                                    break;
-                                case "MB":
-                                    ddlProvince.Items[3].Selected = true;
-                                    break;
-                                case "NB":
-                                    ddlProvince.Items[4].Selected = true;
-                                    break;
-                                case "NL":
-                                    ddlProvince.Items[5].Selected = true;
-                                    break;
-                                case "NT":
-                                    ddlProvince.Items[6].Selected = true;
-                                    break;
-                                case "NS":
-                                    ddlProvince.Items[7].Selected = true;
-                                    break;
-                                case "NU":
-                                    ddlProvince.Items[8].Selected = true;
-                                    break;
-                                case "PE":
-                                    ddlProvince.Items[9].Selected = true;
-                                    break;
-                                case "QC":
-                                    ddlProvince.Items[10].Selected = true;
-                                    break;
-                                case "SK":
-                                    ddlProvince.Items[11].Selected = true;
-                                    break;
-                                case "YT":
-                                    ddlProvince.Items[12].Selected = true;
-                                    break;
+                            for (int i = 0; i < ddlProvince.Items.Count; i++) {
+                                if (ddlProvince.Items[i].Value == reader[7].ToString()) {
+                                    ddlProvince.SelectedIndex = i;
+                                }
                             }
 
                             tbPostalCode.Text = (string)reader[8];
@@ -114,85 +84,68 @@ namespace Caregiver.Web_Pages {
 
                         reader.Close();
 
+                        // Get all of the patient's history
                         cmd.CommandText = "SELECT h.Name FROM History h JOIN PatientHistory " +
                             "ON h.HistoryId = PatientHistory.HistoryId JOIN Patient " +
                             "ON Patient.PatientId = PatientHistory.PatientId " +
                             "WHERE Patient.PatientId = @id";
                         
 
-                        SqlDataReader rdr = cmd.ExecuteReader();
-                        if (rdr.HasRows) {
-                            while (rdr.Read()) {
-                                switch ((string)rdr[0]) {
-                                    case "Heart Disease":
-                                        patient.History.Add("Heart Disease");
-                                        cblHistory.Items[0].Selected = true;
-                                        break;
-                                    case "Smoking":
-                                        patient.History.Add("Smoking");
-                                        cblHistory.Items[1].Selected = true;
-                                        break;
-                                    case "Diabetes":
-                                        patient.History.Add("Diabetes");
-                                        cblHistory.Items[2].Selected = true;
-                                        break;
-                                    case "High Blood Pressure":
-                                        patient.History.Add("High Blood Pressure");
-                                        cblHistory.Items[3].Selected = true;
-                                        break;
-                                    case "Stroke":
-                                        patient.History.Add("Stroke");
-                                        cblHistory.Items[4].Selected = true;
-                                        break;
+                        reader = cmd.ExecuteReader();
+                        if (reader.HasRows) {
+                            while (reader.Read()) {
+                                string history = reader[0].ToString();
+                                for (int i = 0; i < cblHistory.Items.Count; i++) {
+                                    if (cblHistory.Items[i].Text == history) {
+                                        patient.History.Add(history);
+                                        cblHistory.Items[i].Selected = true;
+                                    }
                                 }
                             }
                         }
-                        rdr.Close();
+                        reader.Close();
 
+                        // Get all of the patient's symptoms
                         cmd.CommandText = "SELECT s.Name FROM Symptom s JOIN PatientSymptom " +
                             "ON s.SymptomId = PatientSymptom.SymptomId JOIN Patient " +
                             "ON Patient.PatientId = PatientSymptom.PatientId " +
                             "WHERE Patient.PatientId = @id; ";
 
-                        SqlDataReader rdr3 = cmd.ExecuteReader();
-                        if (rdr3.HasRows) {
-                            while (rdr3.Read()) {
-                                switch ((string)rdr3[0]) {
-                                    case "Chest Pain":
-                                        patient.Symptoms.Add("Chest Pain");
-                                        cblSymptom.Items[0].Selected = true;
-                                        break;
-                                    case "Shortness of Breath":
-                                        patient.Symptoms.Add("Shortness of Breath");
-                                        cblSymptom.Items[1].Selected = true;
-                                        break;
-                                    case "Numbness":
-                                        patient.Symptoms.Add("Numbness");
-                                        cblSymptom.Items[2].Selected = true;
-                                        break;
-                                    case "Dizziness":
-                                        patient.Symptoms.Add("Dizziness");
-                                        cblSymptom.Items[3].Selected = true;
-                                        break;
-                                    case "Fever":
-                                        patient.Symptoms.Add("Fever");
-                                        cblSymptom.Items[4].Selected = true;
-                                        break;
-                                    case "Vomiting":
-                                        patient.Symptoms.Add("Vomiting");
-                                        cblSymptom.Items[5].Selected = true;
-                                        break;
-                                    case "Constant Urination":
-                                        patient.Symptoms.Add("Constant Urination");
-                                        cblSymptom.Items[6].Selected = true;
-                                        break;
+                        reader = cmd.ExecuteReader();
+                        if (reader.HasRows) {
+                            while (reader.Read()) {
+                                string symptom = reader[0].ToString();
+                                for (int i = 0; i < cblSymptom.Items.Count; i++) {
+                                    if (cblSymptom.Items[i].Text == symptom) {
+                                        patient.Symptoms.Add(symptom);
+                                        cblSymptom.Items[i].Selected = true;
+                                    }
                                 }
                             }
                         }
-                        rdr3.Close();
+                        reader.Close();
                     }
                 }
+
+                ViewState["Patient"] = this.patient;
+
+            } else {
+                this.patient = (Classes.Patient) ViewState["Patient"];
             }
+        }
+
+        private void SetEnabled(bool value) {
+            tbFirstName.Enabled = value;
+            tbLastName.Enabled = value;
+            rdbSex.Enabled = value;
+            tbDob.Enabled = value;
+            cblHistory.Enabled = value;
+            tbAddress.Enabled = value;
+            tbCity.Enabled = value;
+            ddlProvince.Enabled = value;
+            tbPostalCode.Enabled = value;
+            tbPhoneNum.Enabled = value;
+            cblSymptom.Enabled = value;
         }
 
         protected void lbReturn_Click(object sender, EventArgs e) {
@@ -200,64 +153,14 @@ namespace Caregiver.Web_Pages {
         }
 
         protected void btn_Diagnose(object sender, EventArgs e) {
-            int age = patient.CalculateAge();
             string result = "";
 
-            int coronaryArteryDiseaseChance = 0;
-            int strokeChance = 0;
-            int fluChance = 0;
-            int kidneyDiseaseChance = 0;
-
-            // test cases to increase chance of particular disease if they have disease or symptom
-            if (patient.History.Contains("Heart Disease")) {
-                coronaryArteryDiseaseChance += 10;
-            }
-            if (patient.History.Contains("Smoking")) {
-                coronaryArteryDiseaseChance += 10;
-                strokeChance += 10;
-            }
-            if (patient.History.Contains("Diabetes")) {
-                coronaryArteryDiseaseChance += 10;
-            }
-            if (patient.History.Contains("Stroke")) {
-                strokeChance += 10;
-            }
-            if (patient.History.Contains("Diabetes")) {
-                coronaryArteryDiseaseChance += 10;
-            }
-            if (patient.Symptoms.Contains("Chest Pain")) {
-                coronaryArteryDiseaseChance += 10;
-            }
-            if (patient.Symptoms.Contains("Shortness of Breath")) {
-                coronaryArteryDiseaseChance += 10;
-                fluChance += 10;
-                kidneyDiseaseChance += 10;
-            }
-            if (patient.Symptoms.Contains("Dizziness")) {
-                coronaryArteryDiseaseChance += 10;
-                strokeChance += 10;
-                fluChance += 10;
-            }
-            if (patient.Symptoms.Contains("High Blood Pressure")) {
-                coronaryArteryDiseaseChance += 10;
-                strokeChance += 10;
-            }
-            if (patient.Symptoms.Contains("Numbness")) {
-                coronaryArteryDiseaseChance += 10;
-                strokeChance += 10;
-            }
-            if (patient.Symptoms.Contains("Fever")) {
-                fluChance += 10;
-            }
-            if (patient.Symptoms.Contains("Vomiting")) {
-                fluChance += 10;
-                kidneyDiseaseChance += 10;
-            }
-            if (patient.Symptoms.Contains("Constant Urination")) {
-                kidneyDiseaseChance += 10;
-            }
-
-            if(coronaryArteryDiseaseChance == 0 && strokeChance == 0 && fluChance == 0 && kidneyDiseaseChance == 0) {
+            int coronaryArteryDiseaseChance = patient.CalculateCoronaryArteryChance();
+            int strokeChance = patient.CalculateStrokeChance();
+            int fluChance = patient.CalculateFluChance();
+            int kidneyDiseaseChance = patient.CalculateKidneyDiseaseChance();
+            
+            if (coronaryArteryDiseaseChance == 0 && strokeChance == 0 && fluChance == 0 && kidneyDiseaseChance == 0) {
                 result = "No diagnosis.";
             }
 
@@ -319,16 +222,6 @@ namespace Caregiver.Web_Pages {
             //Numbness
             //Dizziness
             //High Blood Pressure
-            if (patient.Sex == 'F' && age >= 55 || patient.Sex == 'M' && age >= 45) {
-                coronaryArteryDiseaseChance += 10;
-                if (patient.History.Contains("Heart Disease") && patient.History.Contains("Smoking")
-                     && patient.History.Contains("Diabetes") && patient.Symptoms.Contains("Chest Pain")
-                     && patient.Symptoms.Contains("Shortness of Breath") && patient.Symptoms.Contains("Numbness")
-                     && patient.Symptoms.Contains("Dizziness") && patient.Symptoms.Contains("High Blood Pressure")) {
-                    result = "Probable chance of Coronary Artery Disease";
-                    
-                }
-            }
 
             //Stroke
             //Person criteria:
@@ -341,14 +234,6 @@ namespace Caregiver.Web_Pages {
             //High Blood Pressure
             //Dizziness
             //Numbness
-            if (patient.Sex == 'F' && age >= 55 || patient.Sex == 'M' && age > 55) {
-                strokeChance += 10;
-                if (patient.History.Contains("Smoking") && patient.History.Contains("Stroke")
-                    && patient.Symptoms.Contains("High Blood Pressure") && patient.Symptoms.Contains("Dizziness")
-                    && patient.Symptoms.Contains("Numbness")) {
-                    result = "Probable chance of Stroke";
-                }
-            }
 
             //Flu(Influenza)
             //Person criteria:
@@ -359,13 +244,6 @@ namespace Caregiver.Web_Pages {
             //Dizziness
             //Fever
             //Vomiting
-            if (age <= 2 || age >= 65) {
-                fluChance += 10;
-                if (patient.Symptoms.Contains("Shortness of Breath") && patient.Symptoms.Contains("Dizziness")
-                    && patient.Symptoms.Contains("Fever") && patient.Symptoms.Contains("Vomiting")) {
-                    result = "Probable chance of Flu(Influenza)";
-                }
-            }
 
             //Kidney Disease
             //Person criteria:
@@ -375,13 +253,6 @@ namespace Caregiver.Web_Pages {
             //Vomiting
             //Constant urination
             //Shortness of Breath
-            if (age >= 60) {
-                kidneyDiseaseChance += 10;
-                if (patient.Symptoms.Contains("Vomiting") && patient.Symptoms.Contains("Constant Urination")
-                    && patient.Symptoms.Contains("Shortness of Breath")) {
-                    result = "Probable chance of Kidney Disease";
-                }
-            }
 
             lbl1.Text = "coronaryArteryDiseaseChance = " + coronaryArteryDiseaseChance.ToString();
             lbl2.Text = "strokeChance = " + strokeChance.ToString();
@@ -391,11 +262,16 @@ namespace Caregiver.Web_Pages {
             lblDiagnosis.Text = result;
         }
 
-        protected void btnDiagnose_Click(object sender, EventArgs e) {
-            
+        protected void tbEdit_Click(object sender, EventArgs e) {
+            SetEnabled(true);
+            tbEdit.Style.Add("display", "none");
+            tbSave.Style.Add("display", "inline");
         }
 
-        protected void tbEdit_Click(object sender, EventArgs e) {
+        protected void tbSave_Click(object sender, EventArgs e) {
+            tbEdit.Style.Add("display", "inline");
+            tbSave.Style.Add("display", "none");
+            
             using (SqlConnection conn = new SqlConnection()) {
                 conn.ConnectionString = "server=(local);database=Caregiver;Integrated Security=SSPI";
                 try {
@@ -413,7 +289,7 @@ namespace Caregiver.Web_Pages {
                                           " where PatientId = @id2;";
                         cmd.Parameters.AddWithValue("@FirstName", tbFirstName.Text);
                         cmd.Parameters.AddWithValue("@LastName", tbLastName.Text);
-                        cmd.Parameters.AddWithValue("@Sex", tbSex.Text);
+                        cmd.Parameters.AddWithValue("@Sex", rdbSex.SelectedValue);
                         cmd.Parameters.AddWithValue("@Birthday", Convert.ToDateTime(tbDob.Text));
                         cmd.Parameters.AddWithValue("@Address", tbAddress.Text);
                         cmd.Parameters.AddWithValue("@City", tbCity.Text);
@@ -461,7 +337,7 @@ namespace Caregiver.Web_Pages {
                 } catch (Exception ex) {
                     lblUpdateResult.Text = ex.Message;
                 }
-                
+
             }
         }
     }
