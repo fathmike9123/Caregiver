@@ -7,7 +7,17 @@ using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Data;
 
+/// <author>Ryan Haire</author>
+/// <summary>
+/// This class is for viewing a list of all the patients in the database
+/// </summary>
 namespace Caregiver.Web_Pages {
+
+    /// <author>Stefano & Ryan Haire</author>
+    /// <summary>
+    /// On page load the list of patients are queried from the database and displayed as links to
+    /// their patient information
+    /// </summary>
     public partial class ViewAllPatients : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
@@ -77,16 +87,28 @@ namespace Caregiver.Web_Pages {
             }
         }
 
+        /// <author>Stefano</author>
+        /// <summary>
+        /// 
+        /// </summary>
         private void btnPatient_Click(object sender, EventArgs e) {
             int patientId = Convert.ToInt32(((LinkButton)sender).ID);
             Session["PatientId"] = patientId;
             Server.Transfer("Patient.aspx");
         }
 
+        /// <author>Stefano</author>
+        /// <summary>
+        /// 
+        /// </summary>
         protected void lbReturn_Click(object sender, EventArgs e) {
             Server.Transfer("Home.aspx");
         }
 
+        /// <author>Stefano</author>
+        /// <summary>
+        /// 
+        /// </summary>
         protected void lbReports_Click(object sender, EventArgs e) {
             Server.Transfer("Reports.aspx");
         }

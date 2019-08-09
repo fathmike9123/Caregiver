@@ -12,8 +12,17 @@ using System.Data.SqlClient;
  * Available: https://forums.asp.net/t/2132465.aspx?Get PK Id of newly inserted row using C . 
  * [Accessed: 28-Jul-2019].
  */
+
+/// <author>Stefano Unlayao</author>
+/// <summary>
+/// 
+/// </summary>
 namespace Caregiver.Web_Pages {
     public partial class CreatePatient : System.Web.UI.Page {
+
+        /// <summary>
+        /// 
+        /// </summary>
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
 
@@ -23,6 +32,9 @@ namespace Caregiver.Web_Pages {
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected void lbAdd_Click(object sender, EventArgs e) {
             if (tbFirstName.Text == "" || tbLastName.Text == "" || tbDob.Text == "" || tbPhoneNum.Text == "" || tbAddress.Text == "" || tbCity.Text == "" || tbPostalCode.Text == "") {
                 warningMessage.Style.Add("display", "inline");
@@ -71,6 +83,9 @@ namespace Caregiver.Web_Pages {
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void AddNewPatient(Classes.Patient patient) {
             string conString = "server=(local);database=Caregiver;Integrated Security=SSPI;";
             using (SqlConnection conn = new SqlConnection(conString)) {
@@ -122,6 +137,9 @@ namespace Caregiver.Web_Pages {
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected void lbReturn_Click(object sender, EventArgs e) {
             Server.Transfer("Home.aspx");
         }

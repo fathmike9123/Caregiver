@@ -6,8 +6,16 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 
+/// <author>Stefano Unlayao</author>
+/// <summary>
+/// 
+/// </summary>
 namespace Caregiver.Web_Pages {
     public partial class Search : System.Web.UI.Page {
+
+        /// <summary>
+        /// 
+        /// </summary>
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
                 //if (!(bool)Session["IsRegisteredUser"]) {
@@ -32,10 +40,16 @@ namespace Caregiver.Web_Pages {
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected void lbReturn_Click(object sender, EventArgs e) {
             Server.Transfer("Home.aspx");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected void btnSearch_Click(object sender, EventArgs e) {
             string selectedValue = ddlChoice.SelectedValue;
 
@@ -77,10 +91,11 @@ namespace Caregiver.Web_Pages {
             } else if (selectedValue == "History") {
                 SearchLists("History", rdbHistory);
             }
-
-
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void SearchCriteria(string append, string paramName, string paramValue) {
             if (paramValue != "") {
                 string conString = "server=(local);database=Caregiver;Integrated Security=SSPI;";
@@ -114,6 +129,9 @@ namespace Caregiver.Web_Pages {
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void SearchLists(string tableName, RadioButtonList rdb) {
             string conString = "server=(local);database=Caregiver;Integrated Security=SSPI;";
             using (SqlConnection conn = new SqlConnection(conString)) {
@@ -154,19 +172,27 @@ namespace Caregiver.Web_Pages {
                 }
             }
         }
-        
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected void ddlChoice_SelectedIndexChanged(object sender, EventArgs e) {
             DisplaySelected();
             tbText.Text = "";
             ClearGridView();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void ClearGridView() {
             gridViewResult.DataSource = null;
             gridViewResult.DataBind();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void DisplaySelected() {
             if (ddlChoice.SelectedValue == "Sex") {
                 rdbSex.Style.Add("display", "inline");

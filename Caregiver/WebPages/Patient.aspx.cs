@@ -7,17 +7,24 @@ using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Data;
 
+/// <author>Ryan Haire</author>
+/// <summary>
+/// This class is for patient information editing and diagnosis of disease
+/// </summary>
+
 namespace Caregiver.Web_Pages {
     public partial class Patient : System.Web.UI.Page {
 
         private Classes.Patient patient;
 
+        /// <summary>
+        /// On page load, the form values are filled with the patients data from the database
+        /// </summary>
         protected void Page_Load(object sender, EventArgs e) {
-            
-
             SetEnabled(false);
             tbEdit.Style.Add("display", "inline");
             tbSave.Style.Add("display", "none");
+
 
             if (!IsPostBack) {
                 //if (!(bool)Session["IsRegisteredUser"]) {
@@ -134,6 +141,11 @@ namespace Caregiver.Web_Pages {
             }
         }
 
+        /// <author>Stefano</author>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
         private void SetEnabled(bool value) {
             tbFirstName.Enabled = value;
             tbLastName.Enabled = value;
@@ -148,10 +160,19 @@ namespace Caregiver.Web_Pages {
             cblSymptom.Enabled = value;
         }
 
+        /// <author>Stefano</author>
+        /// <summary>
+        /// 
+        /// </summary>
         protected void lbReturn_Click(object sender, EventArgs e) {
             Server.Transfer("ViewAllPatients.aspx");
         }
 
+        /// <summary>
+        /// This function is for calculating the diagnosis of the patient by checking what symptoms
+        /// and history they have compared to the disease that contains the respective symptoms and diseases
+        /// Then outputs the diagnosis
+        /// </summary>
         protected void btn_Diagnose(object sender, EventArgs e) {
             string result = "";
 
@@ -262,12 +283,19 @@ namespace Caregiver.Web_Pages {
             lblDiagnosis.Text = result;
         }
 
+        /// <author>Stefano</author>
+        /// <summary>
+        /// 
+        /// </summary>
         protected void tbEdit_Click(object sender, EventArgs e) {
             SetEnabled(true);
             tbEdit.Style.Add("display", "none");
             tbSave.Style.Add("display", "inline");
         }
 
+        /// <summary>
+        /// This function saves the patient information that was edited into the database
+        /// </summary>
         protected void tbSave_Click(object sender, EventArgs e) {
             tbEdit.Style.Add("display", "inline");
             tbSave.Style.Add("display", "none");
