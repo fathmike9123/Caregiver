@@ -7,17 +7,26 @@ using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Data;
 
+/// <author>Ryan Haire</author>
+/// <summary>
+/// This class is for patient information editing and diagnosis of disease
+/// </summary>
+
 namespace Caregiver.Web_Pages {
     public partial class Patient : System.Web.UI.Page {
 
         private Classes.Patient patient;
 
+        /// <summary>
+        /// On page load, the form values are filled with the patients data from the database
+        /// </summary>
         protected void Page_Load(object sender, EventArgs e) {
-
+            
 
             SetEnabled(false);
             btnEdit.Style.Add("display", "inline");
             btnSave.Style.Add("display", "none");
+
 
             if (!IsPostBack) {
                 //if (!(bool)Session["IsRegisteredUser"]) {
@@ -128,6 +137,11 @@ namespace Caregiver.Web_Pages {
             }
         }
 
+        /// <author>Stefano</author>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
         private void SetEnabled(bool value) {
             tbFirstName.Enabled = value;
             tbLastName.Enabled = value;
@@ -142,10 +156,19 @@ namespace Caregiver.Web_Pages {
             cblSymptom.Enabled = value;
         }
 
+        /// <author>Stefano</author>
+        /// <summary>
+        /// 
+        /// </summary>
         protected void lbReturn_Click(object sender, EventArgs e) {
             Server.Transfer("ViewAllPatients.aspx");
         }
 
+        /// <summary>
+        /// This function is for calculating the diagnosis of the patient by checking what symptoms
+        /// and history they have compared to the disease that contains the respective symptoms and diseases
+        /// Then outputs the diagnosis
+        /// </summary>
         protected void btn_Diagnose(object sender, EventArgs e) {
             string result = "";
 
@@ -153,26 +176,15 @@ namespace Caregiver.Web_Pages {
             int strokeChance = patient.CalculateStrokeChance();
             int fluChance = patient.CalculateFluChance();
             int kidneyDiseaseChance = patient.CalculateKidneyDiseaseChance();
-
-            //to be deleted after
-            lbl1.Style.Add("display", "inline");
-            lbl2.Style.Add("display", "inline");
-            lbl3.Style.Add("display", "inline");
-            lbl4.Style.Add("display", "inline");
-            lblDiagnosis.Style.Add("display", "inline");
-
-
-            if (cblSymptom.SelectedIndex == -1) {
+            
+            if (coronaryArteryDiseaseChance == 0 && strokeChance == 0 && fluChance == 0 && kidneyDiseaseChance == 0) {
                 result = "No diagnosis.";
-                lbl1.Text = "";
-                lbl2.Text = "";
-                lbl3.Text = "";
-                lbl4.Text = "";
-            } else {
-                // check if all chances are equal
-                if (coronaryArteryDiseaseChance == strokeChance && coronaryArteryDiseaseChance == fluChance && coronaryArteryDiseaseChance == kidneyDiseaseChance) {
-                    result = "Probable chance of Flu(Influenza)";
-                } // check if coronaryArteryDiseaseChance is greater than all the others 
+            }
+
+            // check if all chances are equal
+            if (coronaryArteryDiseaseChance == strokeChance && coronaryArteryDiseaseChance == fluChance && coronaryArteryDiseaseChance == kidneyDiseaseChance) {
+                result = "Probable chance of Flu(Influenza)";
+            } // check if coronaryArteryDiseaseChance is greater than all the others 
 
                 // if one chance is greater than the others
                 if (coronaryArteryDiseaseChance > strokeChance && coronaryArteryDiseaseChance > fluChance && coronaryArteryDiseaseChance > kidneyDiseaseChance) {
@@ -214,21 +226,36 @@ namespace Caregiver.Web_Pages {
                     result = "Probable chance of Flu(Influenza)";
                 }
 
-                lbl1.Text = "coronaryArteryDiseaseChance = " + coronaryArteryDiseaseChance.ToString();
-                lbl2.Text = "strokeChance = " + strokeChance.ToString();
-                lbl3.Text = "fluChance = " + fluChance.ToString();
-                lbl4.Text = "kidneyDiseaseChance = " + kidneyDiseaseChance.ToString();
-            }
+            //Flu(Influenza)
+            //Person criteria:
+            //Age <= 2 or >= 65
+            //History criteria:
+            //Symptoms criteria:
+            //Shortness of Breath
+            //Dizziness
+            //Fever
+            //Vomiting
 
+            //Kidney Disease
+            //Person criteria:
+            //Age >= 60
+            //History criteria:
+            //Symptoms criteria:
+            //Vomiting
+            //Constant urination
+            //Shortness of Breath
 
-           
+            lbl1.Text = "coronaryArteryDiseaseChance = " + coronaryArteryDiseaseChance.ToString();
+            lbl2.Text = "strokeChance = " + strokeChance.ToString();
+            lbl3.Text = "fluChance = " + fluChance.ToString();
+            lbl4.Text = "kidneyDiseaseChance = " + kidneyDiseaseChance.ToString();
 
             
 
             lblDiagnosis.Text = result;
         }
 
-        protected void btnEdit_Click(object sender, EventArgs e) {
+        protected void tbEdit_Click(object sender, EventArgs e) {
             SetEnabled(true);
             btnEdit.Style.Add("display", "none");
             btnSave.Style.Add("display", "inline");
@@ -244,18 +271,10 @@ namespace Caregiver.Web_Pages {
             lblDiagnosis.Style.Add("display", "none");
         }
 
-        protected void btnSave_Click(object sender, EventArgs e) {
-            btnEdit.Style.Add("display", "inline");
-            btnSave.Style.Add("display", "none");
-            btnDiagnose.Style.Add("display", "inline");
-
-            //to be deleted after
-            lbl1.Style.Add("display", "none");
-            lbl2.Style.Add("display", "none");
-            lbl3.Style.Add("display", "none");
-            lbl4.Style.Add("display", "none");
-            lblDiagnosis.Style.Add("display", "none");
-
+        protected void tbSave_Click(object sender, EventArgs e) {
+            tbEdit.Style.Add("display", "inline");
+            tbSave.Style.Add("display", "none");
+            
             using (SqlConnection conn = new SqlConnection()) {
                 conn.ConnectionString = "server=(local);database=Caregiver;Integrated Security=SSPI";
                 try {

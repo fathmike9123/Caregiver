@@ -6,8 +6,16 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 
+/// <author>Stefano Unlayao</author>
+/// <summary>
+/// 
+/// </summary>
 namespace Caregiver.Web_Pages {
     public partial class DatabaseAccess : System.Web.UI.Page {
+
+        /// <summary>
+        /// 
+        /// </summary>
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
                 //if (!(bool)Session["IsRegisteredUser"]) {
@@ -24,10 +32,16 @@ namespace Caregiver.Web_Pages {
             HideDivs();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected void lbReturn_Click(object sender, EventArgs e) {
             Server.Transfer("Home.aspx");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void HideDivs() {
             divPatients.Style.Add("display", "none");
             divUsers.Style.Add("display", "none");
@@ -35,6 +49,9 @@ namespace Caregiver.Web_Pages {
             divPatientSymp.Style.Add("display", "none");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void ShowData(string query) {
             string conString = "server=(local);database=Caregiver;Integrated Security=SSPI;";
             using (SqlConnection conn = new SqlConnection()) {
@@ -53,6 +70,10 @@ namespace Caregiver.Web_Pages {
                 }
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         protected void btnUsers_Click(object sender, EventArgs e) {
             ViewState["ButtonPressed"] = "Users";
             string query = "SELECT * FROM Users";
@@ -61,6 +82,9 @@ namespace Caregiver.Web_Pages {
             HideDivs();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected void btnPatients_Click(object sender, EventArgs e) {
             ViewState["ButtonPressed"] = "Patients";
             string query = "SELECT * FROM Patient";
@@ -69,6 +93,9 @@ namespace Caregiver.Web_Pages {
             HideDivs();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected void btnPatientHistory_Click(object sender, EventArgs e) {
             ViewState["ButtonPressed"] = "PatientHistory";
             string query = "SELECT ph.PatientId, FirstName, LastName, ph.HistoryId, Name " +
@@ -82,6 +109,9 @@ namespace Caregiver.Web_Pages {
             HideDivs();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected void btnPatientSymptom_Click(object sender, EventArgs e) {
             ViewState["ButtonPressed"] = "PatientSymptoms";
             string query = "SELECT ps.PatientId, FirstName, LastName, ps.SymptomId, Name  " +
@@ -95,6 +125,9 @@ namespace Caregiver.Web_Pages {
             HideDivs();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected void grdResult_SelectedIndexChanged(object sender, EventArgs e) {
             string conString = "server=(local);database=Caregiver;Integrated Security=SSPI;";
             using (SqlConnection conn = new SqlConnection()) {
@@ -216,15 +249,9 @@ namespace Caregiver.Web_Pages {
             }
         }
 
-
-
-
-
-
-
-
-
-
+        /// <summary>
+        /// 
+        /// </summary>
         private void UpdateRecord(string primaryKey, string tableName) {
             string conString = "server=(local);database=Caregiver;Integrated Security=SSPI;";
             using (SqlConnection conn = new SqlConnection()) {
@@ -328,6 +355,9 @@ namespace Caregiver.Web_Pages {
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected void btnUpdatePatient_Click(object sender, EventArgs e) {
             if (tbFirstName.Text == "" || tbLastName.Text == "" || tbDob.Text == "" || tbAddress.Text == "" || tbCity.Text == "" || tbPostalCode.Text == "" || tbPhoneNum.Text == "") {
                 Response.Write("<script>alert('Please enter all fields!');</script>");
@@ -338,6 +368,9 @@ namespace Caregiver.Web_Pages {
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected void btnUpdateUser_Click(object sender, EventArgs e) {
             if (tbPassword.Text == "") {
                 Response.Write("<script>alert('Password must not be empty!');</script>");
@@ -348,6 +381,9 @@ namespace Caregiver.Web_Pages {
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected void btnUpdateHistory_Click(object sender, EventArgs e) {
             int count = 0;
             string patientId = grdResult.SelectedRow.Cells[1].Text;
@@ -379,6 +415,9 @@ namespace Caregiver.Web_Pages {
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected void btnUpdateSymptom_Click(object sender, EventArgs e) {
             int count = 0;
             string patientId = grdResult.SelectedRow.Cells[1].Text;
@@ -411,15 +450,9 @@ namespace Caregiver.Web_Pages {
             }
         }
 
-
-
-
-
-
-
-
-
-
+        /// <summary>
+        /// 
+        /// </summary>
         private void DeleteRecord(string primaryKey, string tableName) {
             string conString = "server=(local);database=Caregiver;Integrated Security=SSPI;";
             using (SqlConnection conn = new SqlConnection()) {
@@ -497,27 +530,34 @@ namespace Caregiver.Web_Pages {
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected void btnDeletePatient_Click(object sender, EventArgs e) {
             string patientId = grdResult.SelectedRow.Cells[1].Text;
             DeleteRecord(patientId, "Patient");
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         protected void btnDeleteUser_Click(object sender, EventArgs e) {
             string email = grdResult.SelectedRow.Cells[1].Text;
             DeleteRecord(email, "Users");
         }
 
-
-
+        /// <summary>
+        /// 
+        /// </summary>
         protected void btnDeleteHistory_Click(object sender, EventArgs e) {
             string patientId = grdResult.SelectedRow.Cells[1].Text;
             string historyId = grdResult.SelectedRow.Cells[4].Text;
             DeleteRecord(patientId + "," + historyId, "PatientHistory");
         }
 
-
-
+        /// <summary>
+        /// 
+        /// </summary>
         protected void btnDeleteSymptom_Click(object sender, EventArgs e) {
             string patientId = grdResult.SelectedRow.Cells[1].Text;
             string symptomId = grdResult.SelectedRow.Cells[4].Text;

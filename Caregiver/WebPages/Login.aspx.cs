@@ -6,13 +6,24 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 
+/// <author>Stefano Unlayao</author>
+/// <summary>
+/// 
+/// </summary>
 namespace Caregiver {
     public partial class Login : System.Web.UI.Page {
+
+        /// <summary>
+        /// 
+        /// </summary>
         protected void Page_Load(object sender, EventArgs e) {
             Session["IsRegisteredUser"] = false;
             Session["IsAdmin"] = false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected void lbSignIn_Click(object sender, EventArgs e) {
             string email = tbEmail.Text;
             string password = tbPassword.Text;
