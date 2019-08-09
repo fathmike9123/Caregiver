@@ -160,10 +160,6 @@ namespace Caregiver.Web_Pages {
             int fluChance = patient.CalculateFluChance();
             int kidneyDiseaseChance = patient.CalculateKidneyDiseaseChance();
             
-            if (coronaryArteryDiseaseChance == 0 && strokeChance == 0 && fluChance == 0 && kidneyDiseaseChance == 0) {
-                result = "No diagnosis.";
-            }
-
             // check if all chances are equal
             if (coronaryArteryDiseaseChance == strokeChance && coronaryArteryDiseaseChance == fluChance && coronaryArteryDiseaseChance == kidneyDiseaseChance) {
                 result = "Probable chance of Flu(Influenza)";
@@ -253,6 +249,10 @@ namespace Caregiver.Web_Pages {
             //Vomiting
             //Constant urination
             //Shortness of Breath
+
+            if (coronaryArteryDiseaseChance == 0 && strokeChance == 0 && fluChance == 0 && kidneyDiseaseChance == 0) {
+                result = "No diagnosis.";
+            }
 
             lbl1.Text = "coronaryArteryDiseaseChance = " + coronaryArteryDiseaseChance.ToString();
             lbl2.Text = "strokeChance = " + strokeChance.ToString();
