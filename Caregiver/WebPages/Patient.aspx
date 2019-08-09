@@ -5,9 +5,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.mask.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tbDob').mask('0000-00-00');
+            $('#tbPhoneNum').mask('0000000000');
+            $('#tbPostalCode').mask('S0S0S0');
+        });
+    </script>
 </head>
 <body>
     <form id="form1" runat="server">
+        <div style="padding-left: 1%; text-align: center">
+            <asp:RegularExpressionValidator ID="RegularExpressionValidator1" class="alert alert-danger" runat="server" ControlToValidate="tbPostalCode" ErrorMessage="Invalid postal code format." ValidationExpression="([ABCDEFGHIJKLMNOPQRSTUVWXYabcdefghijklmnopqrstuvwxyz][0-9][ABCDEFGHIJKLMNOPQRSTUVWXYabcdefghijklmnopqrstuvwxyz])\ ?([0-9][ABCEGHJKLMNPRSTVWXYZabcdefghijklmnopqrstuvwxyz][0-9])" Display="Dynamic"></asp:RegularExpressionValidator>
+            <asp:RegularExpressionValidator ID="RegularExpressionValidator2" class="alert alert-danger" runat="server" ControlToValidate="tbPhoneNum" ErrorMessage="Invalid phone number format." ValidationExpression="^(1\s?)?((\([0-9]{3}\))|[0-9]{3})[\s\-]?[\0-9]{3}[\s\-]?[0-9]{4}$" Display="Dynamic"></asp:RegularExpressionValidator>
+            <asp:RegularExpressionValidator ID="RegularExpressionValidator3" class="alert alert-danger" runat="server" ControlToValidate="tbDob" ErrorMessage="Invalid date inputted." ValidationExpression="([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))" Display="Dynamic"></asp:RegularExpressionValidator>
+        </div>
+
         <div>
             <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Size="XX-Large" Text="Patient Page"></asp:Label>
             <br />
@@ -93,8 +110,8 @@
             <br />
             <asp:Label ID="lbl4" runat="server" Text="Label"></asp:Label>
             <br />
-            <asp:Button ID="tbEdit" runat="server" Text="Edit Information" OnClick="tbEdit_Click" />
-            <asp:Button ID="tbSave" runat="server" Text="Save Information" OnClick="tbSave_Click" />
+            <asp:Button ID="btnEdit" runat="server" Text="Edit Information" OnClick="btnEdit_Click" />
+            <asp:Button ID="btnSave" runat="server" Text="Save Information" OnClick="btnSave_Click" />
             <br />
             <asp:Label ID="lblUpdateResult" runat="server" Text="Label"></asp:Label>
             <br />
