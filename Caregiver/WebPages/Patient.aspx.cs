@@ -9,141 +9,80 @@ using System.Data;
 
 /// <author>Ryan Haire</author>
 /// <summary>
-/// This class is for patient information editing and diagnosis of disease
+/// Code Behind File for Patient.aspx
 /// </summary>
 
 namespace Caregiver.Web_Pages {
     public partial class Patient : System.Web.UI.Page {
 
-        private Classes.Patient patient;
+        //private Classes.Patient patient;
 
         /// <summary>
         /// On page load, the form values are filled with the patients data from the database
         /// </summary>
-        protected void Page_Load(object sender, EventArgs e) {
-
-
-            SetEnabled(false);
-            btnEdit.Style.Add("display", "inline");
-            btnSave.Style.Add("display", "none");
-
-
+        protected void Page_Load(object sender, EventArgs e) {        
             if (!IsPostBack) {
                 //if (!(bool)Session["IsRegisteredUser"]) {
                 //    Server.Transfer("Login.aspx");
                 //}
 
-                // initialize patient object
-                patient = new Classes.Patient();
                 SetPatient();
-
-                ViewState["Patient"] = this.patient;
-
-            } else {
-                this.patient = (Classes.Patient)ViewState["Patient"];
             }
+
+            SetEnabled(false);
+            btnEdit.Style.Add("display", "inline");
+            btnSave.Style.Add("display", "none");
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void SetPatient() {
-            using (SqlConnection conn = new SqlConnection()) {
-                conn.ConnectionString = "server=(local);database=Caregiver;integrated security=SSPI;";
-                using (SqlCommand cmd = new SqlCommand()) {
-                    conn.Open();
-                    cmd.Connection = conn;
-                    cmd.CommandText = "SELECT * FROM Patient WHERE PatientId=@id;";
-                    cmd.Parameters.AddWithValue("@id", Session["PatientId"]);
+            Classes.Patient patient = (Classes.Patient) Session["SelectedPatient"];
 
-                    SqlDataReader reader = cmd.ExecuteReader();
+            tbFirstName.Text = patient.FirstName;
+            tbLastName.Text = patient.LastName;
+            if (patient.Sex == 'M') {
+                rdbSex.SelectedIndex = 0;
+                imgUser.ImageUrl = "/Images/Male.png";
+            } else {
+                rdbSex.SelectedIndex = 1;
+                imgUser.ImageUrl = "/Images/Female.png";
+            }
 
-                    // Get all of the patient's information
-                    while (reader.Read()) {
-                        patient.FirstName = (string)reader[1];
-                        patient.LastName = (string)reader[2];
-                        patient.Sex = Convert.ToChar(reader[3]);
-                        patient.Dob = reader[4].ToString();
-                        patient.Address = (string)reader[5];
-                        patient.City = (string)reader[6];
-                        patient.Province = (string)reader[7];
-                        patient.PostalCode = (string)reader[8];
-                        patient.PhoneNum = (string)reader[9];
+            tbDob.Text = patient.Dob;
+            tbAddress.Text = patient.Address;
+            tbCity.Text = patient.City;
 
-                        tbFirstName.Text = (string)reader[1];
-                        tbLastName.Text = (string)reader[2];
-                        if ((string)reader[3] == "M") {
-                            rdbSex.SelectedIndex = 0;
-                            imgUser.ImageUrl = "/Images/Male.png";
-                        } else {
-                            rdbSex.SelectedIndex = 1;
-                            imgUser.ImageUrl = "/Images/Female.png";
-                        }
-                        tbDob.Text = reader[4].ToString().Split(' ')[0];
-                        tbAddress.Text = (string)reader[5];
-                        tbCity.Text = (string)reader[6];
-
-                        for (int i = 0; i < ddlProvince.Items.Count; i++) {
-                            if (ddlProvince.Items[i].Value == reader[7].ToString()) {
-                                ddlProvince.SelectedIndex = i;
-                            }
-                        }
-
-                        tbPostalCode.Text = (string)reader[8];
-                        tbPhoneNum.Text = (string)reader[9];
-                    } // end of patient table info
-
-                    reader.Close();
-
-                    // Get all of the patient's history
-                    cmd.CommandText = "SELECT h.Name FROM History h JOIN PatientHistory " +
-                        "ON h.HistoryId = PatientHistory.HistoryId JOIN Patient " +
-                        "ON Patient.PatientId = PatientHistory.PatientId " +
-                        "WHERE Patient.PatientId = @id";
-
-
-                    reader = cmd.ExecuteReader();
-                    if (reader.HasRows) {
-                        while (reader.Read()) {
-                            string history = reader[0].ToString();
-                            for (int i = 0; i < cblHistory.Items.Count; i++) {
-                                if (cblHistory.Items[i].Text == history) {
-                                    patient.History.Add(history);
-                                    cblHistory.Items[i].Selected = true;
-                                }
-                            }
-                        }
-                    }
-                    reader.Close();
-
-                    // Get all of the patient's symptoms
-                    cmd.CommandText = "SELECT s.Name FROM Symptom s JOIN PatientSymptom " +
-                        "ON s.SymptomId = PatientSymptom.SymptomId JOIN Patient " +
-                        "ON Patient.PatientId = PatientSymptom.PatientId " +
-                        "WHERE Patient.PatientId = @id; ";
-
-                    reader = cmd.ExecuteReader();
-                    if (reader.HasRows) {
-                        while (reader.Read()) {
-                            string symptom = reader[0].ToString();
-                            for (int i = 0; i < cblSymptom.Items.Count; i++) {
-                                if (cblSymptom.Items[i].Text == symptom) {
-                                    patient.Symptoms.Add(symptom);
-                                    cblSymptom.Items[i].Selected = true;
-                                }
-                            }
-                        }
-                    }
-                    reader.Close();
+            for (int i = 0; i < ddlProvince.Items.Count; i++) {
+                if (ddlProvince.Items[i].Text == patient.Province) {
+                    ddlProvince.SelectedIndex = i;
                 }
             }
+
+            tbPostalCode.Text = patient.PostalCode;
+            tbPhoneNum.Text = patient.PhoneNum;        
+
+            for (int i = 0; i < cblHistory.Items.Count; i++) {
+                for (int j = 0; j < patient.History.Count; j++) {
+                    if (cblHistory.Items[i].Text == patient.History[j]) {
+                        cblHistory.Items[i].Selected = true;
+                    }
+                }
+                
+            }
+
+            for (int i = 0; i < cblSymptom.Items.Count; i++) {
+                for (int j = 0; j < patient.Symptoms.Count; j++) {
+                    if (cblSymptom.Items[i].Text == patient.Symptoms[j]) {
+                        cblSymptom.Items[i].Selected = true;
+                    }
+                }
+            }
+
         }
 
         /// <author>Stefano</author>
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="value"></param>
         private void SetEnabled(bool value) {
             tbFirstName.Enabled = value;
             tbLastName.Enabled = value;
@@ -173,6 +112,7 @@ namespace Caregiver.Web_Pages {
         /// </summary>
         protected void btn_Diagnose(object sender, EventArgs e) {
             string result = "";
+            Classes.Patient patient = (Classes.Patient)Session["SelectedPatient"];
 
             int coronaryArteryDiseaseChance = patient.CalculateCoronaryArteryChance();
             int strokeChance = patient.CalculateStrokeChance();
@@ -282,9 +222,11 @@ namespace Caregiver.Web_Pages {
                         conn.Open();
                         cmd.Connection = conn;
 
+                        Classes.Patient patient = (Classes.Patient)Session["SelectedPatient"];
+
                         cmd.CommandText = "DELETE FROM PatientHistory WHERE PatientId=@id;"
                                         + "DELETE FROM PatientSymptom WHERE PatientId=@id";
-                        cmd.Parameters.AddWithValue("@id", Session["PatientId"]);
+                        cmd.Parameters.AddWithValue("@id", patient.Id);
                         cmd.ExecuteNonQuery();
 
                         cmd.CommandText = "UPDATE Patient SET FirstName=@FirstName,LastName=@LastName,Sex=@Sex,Birthday=@Birthday," +
@@ -299,40 +241,40 @@ namespace Caregiver.Web_Pages {
                         cmd.Parameters.AddWithValue("@Province", ddlProvince.SelectedItem.Value);
                         cmd.Parameters.AddWithValue("@PostalCode", tbPostalCode.Text.ToUpper());
                         cmd.Parameters.AddWithValue("@PhoneNum", tbPhoneNum.Text);
-                        cmd.Parameters.AddWithValue("@id2", Session["PatientId"]);
+                        cmd.Parameters.AddWithValue("@id2", patient.Id);
                         cmd.ExecuteNonQuery();
 
-                        this.patient.FirstName = tbFirstName.Text;
-                        this.patient.LastName = tbLastName.Text;
-                        this.patient.Sex = rdbSex.SelectedValue[0];
-                        this.patient.Dob = tbDob.Text;
-                        this.patient.Address = tbAddress.Text;
-                        this.patient.City = tbCity.Text;
-                        this.patient.Province = ddlProvince.SelectedItem.Value;
-                        this.patient.PostalCode = tbPostalCode.Text.ToUpper();
-                        this.patient.PhoneNum = tbPhoneNum.Text;
+                        patient.FirstName = tbFirstName.Text;
+                        patient.LastName = tbLastName.Text;
+                        patient.Sex = rdbSex.SelectedValue[0];
+                        patient.Dob = tbDob.Text;
+                        patient.Address = tbAddress.Text;
+                        patient.City = tbCity.Text;
+                        patient.Province = ddlProvince.SelectedItem.Value;
+                        patient.PostalCode = tbPostalCode.Text.ToUpper();
+                        patient.PhoneNum = tbPhoneNum.Text;
 
                         List<string> history = new List<string>();
-                        this.patient.History.Clear();
+                        patient.History.Clear();
                         foreach (ListItem item in cblHistory.Items) {
                             if (item.Selected) {
                                 history.Add(item.Value);
-                                this.patient.History.Add(item.Text);
+                                patient.History.Add(item.Text);
                             }
                         }
 
                         List<string> symptoms = new List<string>();
-                        this.patient.Symptoms.Clear();
+                        patient.Symptoms.Clear();
                         foreach (ListItem item in cblSymptom.Items) {
                             if (item.Selected) {
                                 symptoms.Add(item.Value);
-                                this.patient.Symptoms.Add(item.Text);
+                                patient.Symptoms.Add(item.Text);
                             }
                         }
 
                         foreach (string item in history) {
                             cmd.CommandText = "INSERT INTO PatientHistory VALUES(@PatientID,@HistoryId)";
-                            cmd.Parameters.AddWithValue("@PatientId", Session["PatientId"]);
+                            cmd.Parameters.AddWithValue("@PatientId", patient.Id);
                             cmd.Parameters.AddWithValue("@HistoryId", item);
                             cmd.ExecuteNonQuery();
                             cmd.Parameters.Clear();
@@ -340,14 +282,14 @@ namespace Caregiver.Web_Pages {
 
                         foreach (string item in symptoms) {
                             cmd.CommandText = "INSERT INTO PatientSymptom VALUES(@PatientID,@SymptomId)";
-                            cmd.Parameters.AddWithValue("@PatientId", Session["PatientId"]);
+                            cmd.Parameters.AddWithValue("@PatientId", patient.Id);
                             cmd.Parameters.AddWithValue("@SymptomId", item);
                             cmd.ExecuteNonQuery();
                             cmd.Parameters.Clear();
                         }
 
                         lblUpdateResult.Text = "Update successfull!";
-                        ViewState["Patient"] = this.patient;
+                        Session["SelectedPatient"] = patient;
                         conn.Close();
                     }
                 } catch (SqlException ex) {

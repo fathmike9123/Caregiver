@@ -7,41 +7,43 @@ using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Web.UI.DataVisualization.Charting;
 
-/// <author>Stefano Unlayao</author>
+/// <author>Stefano Gregor Unlayao</author>
 /// <summary>
-/// 
+/// Code Behind File for Reports.aspx page
 /// </summary>
 namespace Caregiver.Web_Pages {
     public partial class Reports : System.Web.UI.Page {
 
         /// <summary>
-        /// 
+        /// On page load, transfer the user back to Login.aspx if they are not registered
         /// </summary>
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                //if (!(bool)Session["IsRegisteredUser"]) {
-                //    Server.Transfer("Login.aspx");
-                //}
+                if (!(bool)Session["IsRegisteredUser"]) {
+                    Server.Transfer("Login.aspx");
+                }
+
+                // Shows the report based on the number of patients with a given history
                 LoadHistoryDefault();
             }
         }
 
         /// <summary>
-        /// 
+        /// Return to ViewAllPatients page
         /// </summary>
         protected void lbReturn_Click(object sender, EventArgs e) {
             Server.Transfer("ViewAllPatients.aspx");
         }
 
         /// <summary>
-        /// 
+        /// Shows the report based on the number of patients with a given history
         /// </summary>
         protected void btnHistory_Click(object sender, EventArgs e) {
             LoadHistoryDefault();
         }
 
         /// <summary>
-        /// 
+        /// Shows the report based on the number of patients with a given history
         /// </summary>
         private void LoadHistoryDefault() {
             SqlDataSource1.SelectCommand = "SELECT h.Name as XValue, COUNT(*) as YValue " +
@@ -54,7 +56,7 @@ namespace Caregiver.Web_Pages {
         }
 
         /// <summary>
-        /// 
+        /// Shows the report based on the number of patients with a given symptom
         /// </summary>
         protected void btnSymptom_Click(object sender, EventArgs e) {
             SqlDataSource1.SelectCommand = "SELECT s.Name as XValue, COUNT(*) as YValue " +
@@ -67,7 +69,7 @@ namespace Caregiver.Web_Pages {
         }
 
         /// <summary>
-        /// 
+        /// Shows the report based on the number of patients with a given sex
         /// </summary>
         protected void btnSex_Click(object sender, EventArgs e) {
             SqlDataSource1.SelectCommand = "SELECT Sex as XValue, COUNT(*) as YValue " +

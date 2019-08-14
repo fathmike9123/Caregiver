@@ -95,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Patient.cs" />
+    <Compile Include="Classes\PatientIndexer.cs" />
     <Compile Include="WebPages\CreatePatient.aspx.cs">
       <DependentUpon>CreatePatient.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

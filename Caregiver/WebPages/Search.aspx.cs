@@ -6,21 +6,22 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 
-/// <author>Stefano Unlayao</author>
+/// <author>Stefano Gregor Unlayao</author>
 /// <summary>
-/// 
+/// Code Behind File for Search.aspx
 /// </summary>
 namespace Caregiver.Web_Pages {
     public partial class Search : System.Web.UI.Page {
 
         /// <summary>
-        /// 
+        /// On page load, transfer the user back to Login.aspx if they are not registered.
         /// </summary>
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                //if (!(bool)Session["IsRegisteredUser"]) {
-                //    Server.Transfer("Login.aspx");
-                //}
+                if (!(bool)Session["IsRegisteredUser"]) {
+                    Server.Transfer("Login.aspx");
+                }
+                // Only shows the Search textbox on initial load
                 tbText.Style.Add("display", "inline");
                 rdbSex.Style.Add("display", "none");
                 rdbSymptoms.Style.Add("display", "none");
@@ -28,6 +29,7 @@ namespace Caregiver.Web_Pages {
                 rdbHistory.Style.Add("display", "none");
                 divRdbSex.Style.Add("display", "none");
             } else {
+                // Hides all the user prompts during post back
                 tbText.Style.Add("display", "none");
                 rdbSex.Style.Add("display", "none");
                 divRdbSex.Style.Add("display", "none");
@@ -35,20 +37,23 @@ namespace Caregiver.Web_Pages {
                 ddlProvince.Style.Add("display", "none");
                 rdbHistory.Style.Add("display", "none");
                 warningMessage.Style.Add("display", "none");
+
+                // Only shows the user prompt that was last chosen before post back
                 DisplaySelected();
             }
 
         }
 
         /// <summary>
-        /// 
+        /// Return to Home.aspx
         /// </summary>
         protected void lbReturn_Click(object sender, EventArgs e) {
             Server.Transfer("Home.aspx");
         }
 
         /// <summary>
-        /// 
+        /// Search for record(s) based on user input
+        /// "toBeAppended" is to be added at the end of the SQL query statement 
         /// </summary>
         protected void btnSearch_Click(object sender, EventArgs e) {
             string selectedValue = ddlChoice.SelectedValue;
@@ -94,7 +99,7 @@ namespace Caregiver.Web_Pages {
         }
 
         /// <summary>
-        /// 
+        /// Search through the database based on user's criteria (excludes Symptoms + History)
         /// </summary>
         private void SearchCriteria(string append, string paramName, string paramValue) {
             if (paramValue != "") {
@@ -110,9 +115,11 @@ namespace Caregiver.Web_Pages {
                             SqlDataReader reader = cmd.ExecuteReader();
 
                             if (reader.HasRows) {
+                                // Shows results on the Grid View if there are results
                                 gridViewResult.DataSource = reader;
                                 gridViewResult.DataBind();
                             } else {
+                                // Shows error message when there are no results and hides the grid view
                                 warningMessage.Style.Add("display", "inline");
                                 warningMessage.InnerHtml = "There are no results!";
                                 ClearGridView();
@@ -130,7 +137,7 @@ namespace Caregiver.Web_Pages {
         }
 
         /// <summary>
-        /// 
+        /// Search through the database based on user's selected history or symptom
         /// </summary>
         private void SearchLists(string tableName, RadioButtonList rdb) {
             string conString = "server=(local);database=Caregiver;Integrated Security=SSPI;";
@@ -142,11 +149,14 @@ namespace Caregiver.Web_Pages {
 
                         string fieldName = "";
                         string query = "SELECT DISTINCT Patient.PatientId, FirstName, LastName, Sex, Birthday, Address, City, Province, PostalCode, PhoneNum ";
+
                         if (tableName == "Symptom") {
+                            // Updates query to search for PatientSymptom record
                             query += "FROM Patient INNER JOIN PatientSymptom " +
                                 "ON Patient.PatientId = PatientSymptom.PatientId ";
                             fieldName = "SymptomId";
                         } else {
+                            // Updates query to search for PatientHistory record
                             query += "FROM Patient INNER JOIN PatientHistory " +
                                 "ON Patient.PatientId = PatientHistory.PatientId ";
                             fieldName = "HistoryId";
@@ -157,9 +167,11 @@ namespace Caregiver.Web_Pages {
                         SqlDataReader reader = cmd.ExecuteReader();
 
                         if (reader.HasRows) {
+                            // Shows results on the Grid View if there are results
                             gridViewResult.DataSource = reader;
                             gridViewResult.DataBind();
                         } else {
+                            // Shows error message when there are no results and hides the grid view
                             warningMessage.Style.Add("display", "inline");
                             warningMessage.InnerHtml = "There are no results!";
                             ClearGridView();
@@ -174,7 +186,7 @@ namespace Caregiver.Web_Pages {
         }
 
         /// <summary>
-        /// 
+        /// Displays proper user inputs based on the drop down selected
         /// </summary>
         protected void ddlChoice_SelectedIndexChanged(object sender, EventArgs e) {
             DisplaySelected();
@@ -183,7 +195,7 @@ namespace Caregiver.Web_Pages {
         }
 
         /// <summary>
-        /// 
+        /// Removes contents of the Grid VIew
         /// </summary>
         private void ClearGridView() {
             gridViewResult.DataSource = null;
@@ -191,7 +203,7 @@ namespace Caregiver.Web_Pages {
         }
 
         /// <summary>
-        /// 
+        /// Displays the user input fields based on what was selected in the drop down menu
         /// </summary>
         private void DisplaySelected() {
             if (ddlChoice.SelectedValue == "Sex") {

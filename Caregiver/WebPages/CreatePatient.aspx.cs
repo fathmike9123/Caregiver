@@ -13,57 +13,53 @@ using System.Data.SqlClient;
  * [Accessed: 28-Jul-2019].
  */
 
-/// <author>Stefano Unlayao</author>
+/// <author>Stefano Gregor Unlayao</author>
 /// <summary>
-/// 
+/// Code Behind File for the CreatePatient.aspx
 /// </summary>
 namespace Caregiver.Web_Pages {
     public partial class CreatePatient : System.Web.UI.Page {
 
         /// <summary>
-        /// 
+        /// On page load, transfer the user back to Login.aspx if they are not registered
         /// </summary>
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-
-                //if (!(bool)Session["IsRegisteredUser"]) {
-                //    Server.Transfer("Login.aspx");
-                //}
+                if (!(bool)Session["IsRegisteredUser"]) {
+                    Server.Transfer("Login.aspx");
+                }
             }
         }
 
         /// <summary>
-        /// 
+        /// Creates new patient based on user input
         /// </summary>
         protected void lbAdd_Click(object sender, EventArgs e) {
+            // All inputs must be filled in before creating patient
             if (tbFirstName.Text == "" || tbLastName.Text == "" || tbDob.Text == "" || tbPhoneNum.Text == "" || tbAddress.Text == "" || tbCity.Text == "" || tbPostalCode.Text == "") {
                 warningMessage.Style.Add("display", "inline");
                 warningMessage.InnerHtml = "You must fill in all text boxes!";
             } else {
+                // Set patient's information
                 string fName = tbFirstName.Text;
                 string lName = tbLastName.Text;
-                char sex;
-                if (rdbSex.SelectedIndex == 0) {
-                    sex = 'M';
-                } else {
-                    sex = 'F';
-                }
+                char sex = rdbSex.SelectedIndex == 0 ? 'M' : 'F';
                 string dob = tbDob.Text;
-
-
-                List<string> history = new List<string>();
-                foreach (ListItem item in cblHistory.Items) {
-                    if (item.Selected) {
-                        history.Add(item.Value);
-                    }
-                }
-
                 string address = tbAddress.Text;
                 string city = tbCity.Text;
                 string province = ddlProvince.SelectedValue;
                 string postalCode = tbPostalCode.Text.ToUpper();
                 string phoneNum = tbPhoneNum.Text;
 
+                // Sets patient's history (only selected checkboxes)
+                List<string> history = new List<string>();
+                foreach (ListItem item in cblHistory.Items) {
+                    if (item.Selected) {
+                        history.Add(item.Value);
+                    }
+                }                
+
+                // Sets patient's symptoms (only selected checkboxes)
                 List<string> symptoms = new List<string>();
                 foreach (ListItem item in cblSymptom.Items) {
                     if (item.Selected) {
@@ -71,20 +67,19 @@ namespace Caregiver.Web_Pages {
                     }
                 }
 
+                // Create new Patient object
                 Classes.Patient patient = new Classes.Patient(fName, lName, sex, dob);
                 patient.SetLocation(address, city, province, postalCode, phoneNum);
                 patient.History = history;
                 patient.Symptoms = symptoms;
 
-                DatabaseAccess db = new DatabaseAccess();
                 AddNewPatient(patient);
-
                 Server.Transfer("Home.aspx");
             }
         }
 
         /// <summary>
-        /// 
+        /// Add new patient to the database
         /// </summary>
         private void AddNewPatient(Classes.Patient patient) {
             string conString = "server=(local);database=Caregiver;Integrated Security=SSPI;";
@@ -93,13 +88,13 @@ namespace Caregiver.Web_Pages {
                     using (SqlCommand cmd = new SqlCommand()) {
                         conn.Open();
                         cmd.Connection = conn;
-                        // Adds patient
+
+                        // Insert new patient record to Patient table
                         cmd.CommandText = "INSERT INTO Patient (FirstName,LastName,Sex,Birthday," +
                                           "Address,City,Province,PostalCode,PhoneNum)" +
                                           "VALUES(@FirstName,@LastName,@Sex,@Birthday," +
                                           "@Address,@City,@Province,@PostalCode,@PhoneNum);" +
                                           "SELECT SCOPE_IDENTITY()";
-
 
                         cmd.Parameters.AddWithValue("@FirstName", patient.FirstName);
                         cmd.Parameters.AddWithValue("@LastName", patient.LastName);
@@ -111,8 +106,10 @@ namespace Caregiver.Web_Pages {
                         cmd.Parameters.AddWithValue("@PostalCode", patient.PostalCode.ToUpper());
                         cmd.Parameters.AddWithValue("@PhoneNum", patient.PhoneNum);
 
+                        // Since it's an auto-incremented primary key, we want to get its primary key to insert the symptoms + history
                         int patientID = Convert.ToInt32(cmd.ExecuteScalar());
 
+                        // Insert into PatientHistory table based on the PatientId above
                         foreach (string item in patient.History) {
                             cmd.CommandText = "INSERT INTO PatientHistory VALUES(@PatientID,@HistoryId)";
                             cmd.Parameters.AddWithValue("@PatientId", patientID);
@@ -121,6 +118,7 @@ namespace Caregiver.Web_Pages {
                             cmd.Parameters.Clear();
                         }
 
+                        // Insert into PatientSymptom table based on the PatientId above
                         foreach (string item in patient.Symptoms) {
                             cmd.CommandText = "INSERT INTO PatientSymptom VALUES(@PatientID,@SymptomId)";
                             cmd.Parameters.AddWithValue("@PatientId", patientID);
@@ -138,7 +136,7 @@ namespace Caregiver.Web_Pages {
         }
 
         /// <summary>
-        /// 
+        /// Returns to Home.aspx
         /// </summary>
         protected void lbReturn_Click(object sender, EventArgs e) {
             Server.Transfer("Home.aspx");
