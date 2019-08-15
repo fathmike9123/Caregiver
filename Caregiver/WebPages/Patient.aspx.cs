@@ -20,19 +20,27 @@ namespace Caregiver.Web_Pages {
         /// </summary>
         protected void Page_Load(object sender, EventArgs e) {        
             if (!IsPostBack) {
-                //if (!(bool)Session["IsRegisteredUser"]) {
-                //    Server.Transfer("Login.aspx");
-                //}
+                if (!(bool)Session["IsRegisteredUser"]) {
+                    Server.Transfer("Login.aspx");
+                }
+
+                // Initialize the form inputs
                 SetPatient();
+
+                // Remove the message alerts
                 editMessage.Style.Add("display", "none");
                 diagnosisMessage.Style.Add("display", "none");
             }
 
+            // Prevents the user from editing the form (until they press the "Edit" button)
             SetEnabled(false);
             btnEdit.Style.Add("display", "inline");
             btnSave.Style.Add("display", "none");
         }
 
+        /// <summary>
+        /// The form values are filled with the patients data from the database
+        /// </summary>
         private void SetPatient() {
             Classes.Patient patient = (Classes.Patient) Session["SelectedPatient"];
 
@@ -78,32 +86,31 @@ namespace Caregiver.Web_Pages {
 
         }
 
-        /// <author>Stefano</author>
+        /// <author>Stefano Gregor Unlayao</author>
         /// <summary>
-        /// 
+        /// This controls the form's editable property
         /// </summary>
         private void SetEnabled(bool value) {
             fieldSetContainer.Disabled = !value;
         }
-
-        /// <author>Stefano</author>
+        
         /// <summary>
-        /// 
+        /// Returns to ViewAllPatients.aspx
         /// </summary>
         protected void lbReturn_Click(object sender, EventArgs e) {
             Server.Transfer("ViewAllPatients.aspx");
         }
 
         /// <summary>
-        /// This function is for calculating the diagnosis of the patient by checking what symptoms
-        /// and history they have compared to the disease that contains the respective symptoms and diseases
-        /// Then outputs the diagnosis
+        /// This function is for calculating the diagnosis of the patient by checking what symptoms the patient has
+        /// Displays the diagnosis in the alert box on the top
         /// </summary>
         protected void btn_Diagnose(object sender, EventArgs e) {
             string result = "";
             SetPatient();
             Classes.Patient patient = (Classes.Patient)Session["SelectedPatient"];
 
+            // Calculate disease chances
             int coronaryArteryDiseaseChance = patient.CalculateCoronaryArteryChance();
             int strokeChance = patient.CalculateStrokeChance();
             int fluChance = patient.CalculateFluChance();
@@ -160,11 +167,15 @@ namespace Caregiver.Web_Pages {
                 }
             }
 
+            // Displays message box with diagnosis
             editMessage.Style.Add("display", "none");
             diagnosisMessage.InnerHtml = result;
             diagnosisMessage.Style.Add("display", "block");
         }
 
+        /// <summary>
+        /// Allows the form to be editable
+        /// </summary>
         protected void btnEdit_Click(object sender, EventArgs e) {
             SetEnabled(true);
             SetPatient();
@@ -174,6 +185,9 @@ namespace Caregiver.Web_Pages {
             diagnosisMessage.Style.Add("display", "none");
         }
 
+        /// <summary>
+        /// Saves the new information to the database & the Patient object
+        /// </summary>
         protected void btnSave_Click(object sender, EventArgs e) {
             btnEdit.Style.Add("display", "inline");
             btnSave.Style.Add("display", "none");

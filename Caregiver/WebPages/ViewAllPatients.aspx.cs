@@ -26,9 +26,9 @@ namespace Caregiver.Web_Pages {
         /// </summary>
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                //if (!(bool)Session["IsRegisteredUser"]) {
-                //    Server.Transfer("Login.aspx");
-                //}
+                if (!(bool)Session["IsRegisteredUser"]) {
+                    Server.Transfer("Login.aspx");
+                }
             }
             SetIndexer();
             CreatePatientButtons();
