@@ -12,17 +12,64 @@ namespace Caregiver.Classes {
     // Allows the Patient class to be serialized + sent over the server
     [Serializable]
     public class Patient {
+        /// <summary>
+        /// Stores the Id of the patient (corresponds to the primary key)
+        /// </summary>
         public int Id { get; set; }
+
+        /// <summary>
+        /// Stores the first name of the patient
+        /// </summary>
         public string FirstName { get; set; }
+
+        /// <summary>
+        /// Stores the last name of the patient
+        /// </summary>
         public string LastName { get; set; }
+
+        /// <summary>
+        /// Stores the sex of the patient (either 'M' or 'F')
+        /// </summary>
         public char Sex { get; set; }
-        public string Dob { get; set; }
-        public List<string> History { get; set; }
+
+        /// <summary>
+        /// Stores the date of birth of the patient
+        /// </summary>
+        public string Dob { get; set; }        
+
+        /// <summary>
+        /// Stores the address of the patient
+        /// </summary>
         public string Address { get; set; }
+
+        /// <summary>
+        /// Stores the city of the patient
+        /// </summary>
         public string City { get; set; }
+
+        /// <summary>
+        /// Stores the province of the patient
+        /// </summary>
         public string Province { get; set; }
+
+        /// <summary>
+        /// Stores the postal code of the patient
+        /// </summary>
         public string PostalCode { get; set; }
+
+        /// <summary>
+        /// Stores the phone number of the patient
+        /// </summary>
         public string PhoneNum { get; set; }
+
+        /// <summary>
+        /// Stores the histories of the patient (as a list of strings)
+        /// </summary>
+        public List<string> History { get; set; }
+
+        /// <summary>
+        /// Stores the symptoms of the patient (as a list of strings)
+        /// </summary>
         public List<string> Symptoms { get; set; }
 
         /// <summary>
@@ -189,10 +236,12 @@ namespace Caregiver.Classes {
         /// Checks if one object is equal to another object (based on same ID)
         /// </summary>
         public static bool operator ==(Patient p1, Patient p2) {
+            // Checks if p1 is null
             if (ReferenceEquals(p1, null)) {
                 return false;
             }
 
+            // Checks if p2 is null
             if (ReferenceEquals(p2, null)) {
                 return false;
             }
@@ -203,10 +252,12 @@ namespace Caregiver.Classes {
         /// Checks if one object is NOT equal to another object (based on same ID)
         /// </summary>
         public static bool operator !=(Patient p1, Patient p2) {
+            // Checks if p1 is null
             if (ReferenceEquals(p1, null)) {
                 return true;
             }
 
+            // Checks if p2 is null
             if (ReferenceEquals(p2, null)) {
                 return true;
             }

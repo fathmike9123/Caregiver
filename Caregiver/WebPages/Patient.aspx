@@ -5,6 +5,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <link rel="stylesheet" href="../css/bootstrap.css" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <style>
+        .background-menu {
+            text-align: center;
+            padding-left: 20%;
+            padding-right: 20%;
+            padding-top: 5%;
+        }
+    </style>
     <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="../js/jquery.mask.js"></script>
     <script type="text/javascript" src="../js/bootstrap.min.js"></script>
@@ -19,104 +29,150 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div style="padding-left: 1%; text-align: center">
-            <asp:RegularExpressionValidator ID="RegularExpressionValidator1" class="alert alert-danger" runat="server" ControlToValidate="tbPostalCode" ErrorMessage="Invalid postal code format." ValidationExpression="([ABCDEFGHIJKLMNOPQRSTUVWXYabcdefghijklmnopqrstuvwxyz][0-9][ABCDEFGHIJKLMNOPQRSTUVWXYabcdefghijklmnopqrstuvwxyz])\ ?([0-9][ABCEGHJKLMNPRSTVWXYZabcdefghijklmnopqrstuvwxyz][0-9])" Display="Dynamic"></asp:RegularExpressionValidator>
-            <asp:RegularExpressionValidator ID="RegularExpressionValidator2" class="alert alert-danger" runat="server" ControlToValidate="tbPhoneNum" ErrorMessage="Invalid phone number format." ValidationExpression="^(1\s?)?((\([0-9]{3}\))|[0-9]{3})[\s\-]?[\0-9]{3}[\s\-]?[0-9]{4}$" Display="Dynamic"></asp:RegularExpressionValidator>
-            <asp:RegularExpressionValidator ID="RegularExpressionValidator3" class="alert alert-danger" runat="server" ControlToValidate="tbDob" ErrorMessage="Invalid date inputted." ValidationExpression="([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))" Display="Dynamic"></asp:RegularExpressionValidator>
-        </div>
+        <nav class="navbar navbar-light bg-light  ">
+            <img src="../Images/Caregiver Logo.png" height="30" alt="" />
+            <asp:LinkButton ID="lbReturn" runat="server" OnClick="lbReturn_Click" class="btn btn-light">Return to View All Patients</asp:LinkButton>
+        </nav>
 
-        <div>
-            <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Size="XX-Large" Text="Patient Page"></asp:Label>
+        <br />
+        <br />
+        <h1 class="display-1 text-center">Patient Information</h1>
+        <div class="background-menu">
+
+            <div>
+                <asp:RegularExpressionValidator ID="RegularExpressionValidator1" class="alert alert-danger" runat="server" ControlToValidate="tbPostalCode" ErrorMessage="Invalid postal code format." ValidationExpression="([ABCDEFGHIJKLMNOPQRSTUVWXYabcdefghijklmnopqrstuvwxyz][0-9][ABCDEFGHIJKLMNOPQRSTUVWXYabcdefghijklmnopqrstuvwxyz])\ ?([0-9][ABCEGHJKLMNPRSTVWXYZabcdefghijklmnopqrstuvwxyz][0-9])" Display="Dynamic"></asp:RegularExpressionValidator>
+                <asp:RegularExpressionValidator ID="RegularExpressionValidator2" class="alert alert-danger" runat="server" ControlToValidate="tbPhoneNum" ErrorMessage="Invalid phone number format." ValidationExpression="^(1\s?)?((\([0-9]{3}\))|[0-9]{3})[\s\-]?[\0-9]{3}[\s\-]?[0-9]{4}$" Display="Dynamic"></asp:RegularExpressionValidator>
+                <asp:RegularExpressionValidator ID="RegularExpressionValidator3" class="alert alert-danger" runat="server" ControlToValidate="tbDob" ErrorMessage="Invalid date inputted." ValidationExpression="([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))" Display="Dynamic"></asp:RegularExpressionValidator>
+            </div>
+
+            <div id="diagnosisMessage" runat="server" class="alert alert-danger" role="alert" style="display: none;"></div>
+
+            <div id="editMessage" runat="server" class="alert alert-warning" role="alert" style="display: none;">
+                Patient information succesfully updated!
+            </div>
+
+            <div class="card-deck">
+                <div class="card shadow-sm p - 3 mb - 5 bg - white rounded">
+                    <asp:Image ID="imgUser" runat="server" class="card-img-top" Style="margin: auto; padding: 10%; width: 40%" Width="128" />
+                </div>
+
+            </div>
             <br />
+
+            <fieldset runat="server" id="fieldSetContainer">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label>First Name</label>
+                        <asp:TextBox ID="tbFirstName" runat="server" class="form-control" placeholder="First Name"></asp:TextBox>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Last Name</label>
+                        <asp:TextBox ID="tbLastName" runat="server" class="form-control" placeholder="Last Name"></asp:TextBox>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Sex</label>
+                        <asp:RadioButtonList ID="rdbSex" runat="server" RepeatDirection="Horizontal" class="form-control" align="center">
+                            <asp:ListItem Selected="True" Value="M">Male</asp:ListItem>
+                            <asp:ListItem Value="F">Female</asp:ListItem>
+                        </asp:RadioButtonList>
+                    </div>
+                </div>
+
+
+
+
+                <div class="form-group">
+                    <label for="inputAddress">Date of Birth (YYYY-MM-DD):</label>
+                    <asp:TextBox ID="tbDob" runat="server" class="form-control" placeholder="Date of Birth"></asp:TextBox>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputAddress">Phone Number</label>
+                    <asp:TextBox ID="tbPhoneNum" runat="server" TextMode="Phone" class="form-control" placeholder="Phone Number"></asp:TextBox>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputAddress">Address</label>
+                    <asp:TextBox ID="tbAddress" runat="server" class="form-control" placeholder="Address"></asp:TextBox>
+                </div>
+
+
+
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="inputCity">City</label>
+                        <asp:TextBox ID="tbCity" runat="server" class="form-control" placeholder="City"></asp:TextBox>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputState">Province</label>
+                        <asp:DropDownList ID="ddlProvince" runat="server" AutoPostBack="True" class="form-control">
+                            <asp:ListItem>ON</asp:ListItem>
+                            <asp:ListItem>AB</asp:ListItem>
+                            <asp:ListItem>BC</asp:ListItem>
+                            <asp:ListItem>MB</asp:ListItem>
+                            <asp:ListItem>NB</asp:ListItem>
+                            <asp:ListItem>NL</asp:ListItem>
+                            <asp:ListItem>NT</asp:ListItem>
+                            <asp:ListItem>NS</asp:ListItem>
+                            <asp:ListItem>NU</asp:ListItem>
+                            <asp:ListItem>PE</asp:ListItem>
+                            <asp:ListItem>QC</asp:ListItem>
+                            <asp:ListItem>SK</asp:ListItem>
+                            <asp:ListItem>YT</asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label for="inputZip">Postal Code</label>
+                        <asp:TextBox ID="tbPostalCode" runat="server" class="form-control" placeholder="Postal Code"></asp:TextBox>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <br />
+                <div class="form-group row">
+                    <div class="col-sm-2">History:</div>
+                    <div class="col-sm-4">
+                        <div class="form-check" style="text-align: left">
+                            <asp:CheckBoxList ID="cblHistory" runat="server">
+                                <asp:ListItem Value="1">Heart Disease</asp:ListItem>
+                                <asp:ListItem Value="2">Smoking</asp:ListItem>
+                                <asp:ListItem Value="3">Diabetes</asp:ListItem>
+                                <asp:ListItem Value="4">High Blood Pressure</asp:ListItem>
+                                <asp:ListItem Value="5">Stroke</asp:ListItem>
+                            </asp:CheckBoxList>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">Symptoms:</div>
+                    <div class="col-sm-4">
+                        <div class="form-check" style="text-align: left">
+                            <asp:CheckBoxList ID="cblSymptom" runat="server">
+                                <asp:ListItem Value="1">Chest Pain</asp:ListItem>
+                                <asp:ListItem Value="2">Shortness of Breath</asp:ListItem>
+                                <asp:ListItem Value="3">Numbness</asp:ListItem>
+                                <asp:ListItem Value="4">Dizziness</asp:ListItem>
+                                <asp:ListItem Value="5">Fever</asp:ListItem>
+                                <asp:ListItem Value="6">Vomiting</asp:ListItem>
+                                <asp:ListItem Value="7">Constant Urination</asp:ListItem>
+                            </asp:CheckBoxList>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+
+
+            <div>
+                <asp:Button ID="btnDiagnose" runat="server" Text="Diagnose Patient" OnClick="btn_Diagnose" class="btn btn-primary"/>
+                <asp:Button ID="btnEdit" runat="server" Text="Edit Information" OnClick="btnEdit_Click" class="btn btn-primary"/>
+                <asp:Button ID="btnSave" runat="server" Text="Save Information" OnClick="btnSave_Click" class="btn btn-primary"/>
+            </div>
+            <br /><br />
             <br />
-            Image of Patient:<br />
-            <asp:Image ID="imgUser" runat="server" Height="164px" Width="236px" />
-            <br />
-            <br />
-            First Name:
-            <asp:TextBox ID="tbFirstName" runat="server"></asp:TextBox>
-            <br />
-            Last Name:
-            <asp:TextBox ID="tbLastName" runat="server"></asp:TextBox>
-            <br />
-            <br />
-            Sex:
-            <asp:RadioButtonList ID="rdbSex" runat="server" RepeatDirection="Horizontal">
-                <asp:ListItem Selected="True" Value="M">Male</asp:ListItem>
-                <asp:ListItem Value="F">Female</asp:ListItem>
-            </asp:RadioButtonList>
-            <br />
-            Date of Birth:
-            <asp:TextBox ID="tbDob" runat="server"></asp:TextBox>
-            &nbsp;<br />
-            <br />
-            History:<asp:CheckBoxList ID="cblHistory" runat="server">
-                <asp:ListItem Value="1">Heart Disease</asp:ListItem>
-                <asp:ListItem Value="2">Smoking</asp:ListItem>
-                <asp:ListItem Value="3">Diabetes</asp:ListItem>
-                <asp:ListItem Value="4">High Blood Pressure</asp:ListItem>
-                <asp:ListItem Value="5">Stroke</asp:ListItem>
-            </asp:CheckBoxList>
-            <br />
-            <br />
-            Address:<asp:TextBox ID="tbAddress" runat="server"></asp:TextBox>
-            <br />
-            City:<asp:TextBox ID="tbCity" runat="server"></asp:TextBox>
-            <br />
-            Province:<asp:DropDownList ID="ddlProvince" runat="server" AutoPostBack="True">
-                <asp:ListItem>ON</asp:ListItem>
-                <asp:ListItem>AB</asp:ListItem>
-                <asp:ListItem>BC</asp:ListItem>
-                <asp:ListItem>MB</asp:ListItem>
-                <asp:ListItem>NB</asp:ListItem>
-                <asp:ListItem>NL</asp:ListItem>
-                <asp:ListItem>NT</asp:ListItem>
-                <asp:ListItem>NS</asp:ListItem>
-                <asp:ListItem>NU</asp:ListItem>
-                <asp:ListItem>PE</asp:ListItem>
-                <asp:ListItem>QC</asp:ListItem>
-                <asp:ListItem>SK</asp:ListItem>
-                <asp:ListItem>YT</asp:ListItem>
-            </asp:DropDownList>
-            <br />
-            Postal Code:
-            <asp:TextBox ID="tbPostalCode" runat="server"></asp:TextBox>
-            &nbsp;<br />
-            Phone Number:
-            <asp:TextBox ID="tbPhoneNum" runat="server" TextMode="Phone"></asp:TextBox>
-            &nbsp;<br />
-            <br />
-            Symptoms:<asp:CheckBoxList ID="cblSymptom" runat="server">
-                <asp:ListItem Value="1">Chest Pain</asp:ListItem>
-                <asp:ListItem Value="2">Shortness of Breath</asp:ListItem>
-                <asp:ListItem Value="3">Numbness</asp:ListItem>
-                <asp:ListItem Value="4">Dizziness</asp:ListItem>
-                <asp:ListItem Value="5">Fever</asp:ListItem>
-                <asp:ListItem Value="6">Vomiting</asp:ListItem>
-                <asp:ListItem Value="7">Constant Urination</asp:ListItem>
-            </asp:CheckBoxList>
-            <br />
-            <asp:Button ID="btnDiagnose" runat="server" Text="Diagnose Patient" OnClick="btn_Diagnose" />
-            <br />
-            <br />
-            Diagnosis:
-            <asp:Label ID="lblDiagnosis" runat="server" Text="Unknown Diagnosis"></asp:Label>
-            <br />
-            <asp:Label ID="lbl1" runat="server" Text="lbl1"></asp:Label>
-            <br />
-            <asp:Label ID="lbl2" runat="server" Text="Label"></asp:Label>
-            <br />
-            <asp:Label ID="lbl3" runat="server" Text="Label"></asp:Label>
-            <br />
-            <asp:Label ID="lbl4" runat="server" Text="Label"></asp:Label>
-            <br />
-            <asp:Button ID="btnEdit" runat="server" Text="Edit Information" OnClick="btnEdit_Click" />
-            <asp:Button ID="btnSave" runat="server" Text="Save Information" OnClick="btnSave_Click" />
-            <br />
-            <asp:Label ID="lblUpdateResult" runat="server" Text="Label"></asp:Label>
-            <br />
-            <br />
-            <asp:LinkButton ID="lbReturn" runat="server" OnClick="lbReturn_Click">Return to View All Patients</asp:LinkButton>
         </div>
     </form>
 </body>

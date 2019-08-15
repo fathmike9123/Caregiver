@@ -72,14 +72,12 @@
             <div class="form-group">
                 <label for="inputAddress">Date of Birth (YYYY-MM-DD):</label>
                 <asp:TextBox ID="tbDob" runat="server" class="form-control" placeholder="Date of Birth"></asp:TextBox>
-
             </div>
 
 
             <div class="form-group">
                 <label for="inputAddress">Phone Number</label>
                 <asp:TextBox ID="tbPhoneNum" runat="server" TextMode="Phone" class="form-control" placeholder="Phone Number"></asp:TextBox>
-
             </div>
 
             <div class="form-group">

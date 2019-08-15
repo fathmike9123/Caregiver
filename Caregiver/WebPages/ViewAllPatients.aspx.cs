@@ -15,17 +15,14 @@ using Caregiver.Classes;
 namespace Caregiver.Web_Pages {
     public partial class ViewAllPatients : System.Web.UI.Page {
 
-
-
-
+        /// <summary>
+        /// Used for accessing the Patient indexer
+        /// </summary>
         private PatientIndexer indexer = new PatientIndexer();
 
-
-
-        /// <author>Stefano Gregor& Ryan Haire</author>
+        /// <author>Stefano Gregor & Ryan Haire</author>
         /// <summary>
         /// On page load, transfer the user back to Login.aspx if they are not registered. 
-        /// Also, the list of patients are queried from the database and displayed on to the screen as buttons
         /// </summary>
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
@@ -37,6 +34,9 @@ namespace Caregiver.Web_Pages {
             CreatePatientButtons();
         }
 
+        /// <summary>
+        /// The list of patients are queried from the database and displayed on to the screen as buttons
+        /// </summary>
         private void CreatePatientButtons() {
             using (SqlConnection conn = new SqlConnection()) {
                 conn.ConnectionString = "server=(local);database=Caregiver;Integrated Security=SSPI;";
@@ -98,6 +98,7 @@ namespace Caregiver.Web_Pages {
                 }
             }
         }
+
         /// <author>Stefano Gregor Unlayao</author>
         /// <summary>
         /// Event Handler for each dynamically-created buttons
@@ -106,10 +107,12 @@ namespace Caregiver.Web_Pages {
         private void btnPatient_Click(object sender, EventArgs e) {
             int patientId = Convert.ToInt32(((LinkButton)sender).ID);
             SetSelectedPatient(patientId);
-            //Session["PatientId"] = patientId;
-
         }
 
+        /// <summary>
+        /// Checks if the patient exists within the indexer
+        /// If it exists, then set the session variable "SelectedPatient" as the Patient object retrieved
+        /// </summary>
         private void SetSelectedPatient(int index) {
             Classes.Patient selectedPatient = this.indexer[index];
             if (selectedPatient != null) {
@@ -119,7 +122,7 @@ namespace Caregiver.Web_Pages {
         }
 
         /// <summary>
-        /// 
+        /// Initializes the Indexer and fills it will Patient objects for each database record
         /// </summary>
         private void SetIndexer(){
             using (SqlConnection conn = new SqlConnection()) {
